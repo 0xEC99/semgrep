@@ -1,0 +1,2538 @@
+      }
+      *(uint *)((int)&__DT_REL[0x40b].r_info + param_1) = uVar2;
+      *(uint *)(iVar1 + 0x3c) = uVar2;
+      system("echo 0 > /proc/tplink/led_sys");
+      uVar4 = *(uint *)(iVar1 + 0x8c);
+      uVar2 = *(uint *)(iVar1 + 0x90);
+      rsl_createSwSignature
+--
+
+{
+  if (*(char *)(param_2 + 2) != '\0') {
+    util_execSystem("rsl_initProduceInfoObj","echo %d > /proc/tplink/online_ignore_flag",0,param_4,
+                    &_gp_1);
+  }
+  return 0;
+--
+  undefined1 *local_18;
+  
+  local_18 = &_gp_1;
+  util_execSystem("rsl_initPingWatchDogObj","pwdog &");
+  (**(code **)(local_18 + -0x7388))(0xf6,param_1,param_2);
+  iVar2 = *(int *)(local_18 + -0x74cc);
+  uStack_328 = 0;
+--
+          (iVar2 = curMultimode(), iVar2 == 3)) ||
+         (((iVar2 = curMultimode(), iVar2 == 4 || (iVar2 = curMultimode(), iVar2 == 5)) ||
+          (iVar2 = curMultimode(), iVar2 == 6)))) {
+        util_execSystem("rsl_initLanEthIntfObj","ifconfig eth0 up");
+        iVar2 = oal_br_addIntfIntoBridge(&DAT_000c0a54,auStack_38);
+        return iVar2;
+      }
+--
+      if (bVar1) {
+        iVar2 = strcmp("2.4GHz",acStack_957);
+        if (iVar2 == 0) {
+          util_execSystem("rsl_setL3ForwardingObj","killall -q  -SIGINT rt2860apd");
+          pcVar4 = "rt2860apd &";
+        }
+        else {
+          util_execSystem("rsl_setL3ForwardingObj","killall -q  -SIGINT rtinicapd");
+          pcVar4 = "rtinicapd &";
+        }
+        util_execSystem("rsl_setL3ForwardingObj",pcVar4);
+      }
+LAB_00037570:
+      local_b78 = 0;
+--
+  if (iVar1 == 0) {
+    iVar2 = oal_eth_setIGMPSnoopParam(auStack_2c,&local_90);
+    if (iVar2 == 0) {
+      util_execSystem("rsl_initApIgmpSnoop",
+                      "for i in /sys/devices/virtual/net/*/bridge/igmp_query_version; do echo 3 > $i; done"
+                     );
+    }
+--
+                      }
+LAB_0005f180:
+                      uVar5 = curMultimode();
+                      util_execSystem("rsl_initLanWlanObj","echo %d > /proc/tplink/wl_mode",uVar5);
+                      iVar3 = rsl_getObj(0xe7,&local_1470,0xae,auStack_1450);
+                      if (iVar3 != 0) {
+                        cdbg_printf(8,"rsl_initLanWlanObj",0x24fb,"Failed to get multimode cfg\n");
+--
+                      if (local_144e == '\x01') {
+                        iVar3 = strcmp(acStack_144d,"Repeater");
+                        if (iVar3 == 0) {
+                          util_execSystem("rsl_initLanWlanObj",
+                                          "echo 1 > /proc/tplink/onekey_re_status");
+                        }
+                        local_144e = '\0';
+--
+  if (iVar1 == 0) {
+    uVar2 = 0;
+    if (local_36 != *(char *)(param_2 + 2)) {
+      util_execSystem("rsl_setIpv6CfgObj","echo %d > /proc/sys/net/ipv6/conf/all/disable_ipv6");
+      disableIpv6LanCfgObj(param_1,param_2);
+    }
+  }
+--
+undefined4 rsl_initIPv6CfgObj(undefined4 param_1,int param_2,undefined4 param_3,undefined4 param_4)
+
+{
+  util_execSystem("rsl_initIPv6CfgObj","echo %d > /proc/sys/net/ipv6/conf/all/disable_ipv6",
+                  *(undefined *)(param_2 + 2),param_4,&_gp_1);
+  return 0;
+}
+--
+
+
+
+int util_execSystem(int param_1,char *param_2,undefined4 param_3,undefined4 param_4)
+
+{
+  char *pcVar1;
+--
+  cnt = 1;
+  if (0 < ret) {
+    while( true ) {
+      local_234 = system(buffer_230);
+      uVar3 = local_234 & 0x7f;
+      if ((int)local_234 < 0) {
+        if (local_234 == 0xffffffff) {
+--
+  if (0 < iVar1) {
+    iVar1 = 1;
+    do {
+      local_42c = system(acStack_428);
+      uVar2 = local_42c & 0x7f;
+      if ((int)local_42c < 0) {
+        if (local_42c == 0xffffffff) {
+--
+    uVar3 = 0;
+    if ((param_1 != 0) && (param_2 != (char *)0x0)) {
+      iVar2 = inet_addr(param_2);
+      util_execSystem("oal_util_setProcLanAddr","echo \"%s %u,\" > %s",param_1,iVar2,
+                      "/proc/net/conntract_LocalAddr");
+    }
+  }
+--
+  }
+  else {
+    snprintf(acStack_218,0x200,"vconfig rem %s.%d",local_18,param_2 & 0xffff);
+    util_execSystem("util_delVLANIntf",acStack_218);
+    uVar1 = 0;
+  }
+  return uVar1;
+--
+  }
+  else {
+    snprintf(acStack_210,0x200,"vconfig add %s %d",param_1,param_2);
+    util_execSystem("util_createVLANIntf",acStack_210);
+    snprintf(acStack_210,0x200,"vconfig set_flag %s.%d 1 1",param_1,param_2);
+    util_execSystem("util_createVLANIntf",acStack_210);
+    uVar1 = 0;
+  }
+  return uVar1;
+--
+    if (iVar2 != 0) {
+      iVar2 = util_findSystemProc_pptp(&DAT_000d30cc,local_22c,auStack_220,&local_228,&local_230);
+      if (((iVar2 != 0) && (local_22c != 0)) && (local_230 != 0)) {
+        util_execSystem("oal_sys_reboot","kill %d %d");
+        iVar2 = 10;
+        oal_util_sleep(1);
+        do {
+          iVar3 = util_findSystemProc(&DAT_000d30cc,0,auStack_220,&local_228,&local_22c);
+          if (iVar3 == 0) break;
+          util_execSystem("oal_sys_reboot","kill %d",local_22c);
+          iVar2 = iVar2 + -1;
+          oal_util_sleep(1);
+        } while (iVar2 != 0);
+--
+        iVar3 = util_findSystemProc("dhcp6c",0,auStack_220,&local_228,&local_22c);
+        if (iVar3 != 0) {
+          if (local_22c != 0) {
+            util_execSystem("oal_sys_reboot","kill -s 15 %d");
+            oal_util_sleep(1);
+          }
+        }
+        util_execSystem("oal_sys_reboot","kill %d",iVar2);
+        iVar2 = 10;
+        oal_util_sleep(1);
+        do {
+          iVar3 = util_findSystemProc(&DAT_000d30cc,0,auStack_220,&local_228,&local_22c);
+          if (iVar3 == 0) break;
+          util_execSystem("oal_sys_reboot","kill %d",local_22c);
+          iVar2 = iVar2 + -1;
+          oal_util_sleep(1);
+        } while (iVar2 != 0);
+--
+{
+  undefined4 in_a3;
+  
+  util_execSystem("oal_sys_unsetTZ","echo \"\" > %s","/etc/TZ",in_a3,&_gp_1);
+  return 0;
+}
+
+--
+undefined4 oal_sys_enableInternetLed(void)
+
+{
+  util_execSystem("oal_sys_enableInternetLed","echo \"0 0\" > /proc/tplink/led_internet");
+  util_execSystem("oal_sys_enableInternetLed","echo \"1 0\" > /proc/tplink/led_internet");
+  return 0;
+}
+
+--
+          (undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4)
+
+{
+  util_execSystem("oal_sys_disableInternetLed","echo \"0 0\" > /proc/tplink/led_internet",param_3,
+                  param_4,&_gp_1);
+  return 0;
+}
+--
+    util_findSystemProc(&DAT_000d31c4,1,0,0,auStack_18);
+    util_findSystemProc("ushare",1,0,0,auStack_18);
+    util_findSystemProc("vsftpd",1,0,0,auStack_18);
+    util_execSystem("oal_sys_writeAppFlash","echo 2 > /proc/sys/vm/drop_caches");
+    iVar1 = FUN_000968ec(0x20000,param_2,param_1);
+    uVar2 = 0;
+    if (iVar1 < 0) {
+--
+      cdbg_printf(8,"oal_sys_readMacFlash",0x779,"online, randMacSuffix %d.",uVar2);
+      iVar1 = cnet_macToStr(&local_34,param_1,1);
+      if (iVar1 == 0) {
+        util_execSystem("oal_sys_readMacFlash","ifconfig eth0 hw ether %s",param_1);
+        return 0;
+      }
+      uVar3 = 0x77d;
+--
+undefined4 oal_sys_configLed(char param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4)
+
+{
+  util_execSystem("oal_sys_configLed","echo %d > /proc/tplink/led_status",param_1 != '\0',param_4,
+                  &_gp_1);
+  return 0;
+}
+--
+undefined4 oal_intf_createVirtualPorts(void)
+
+{
+  util_execSystem("oal_intf_createVirtualPorts","echo 1 > /proc/tplink/eth_vlan");
+  util_execSystem("oal_intf_createVirtualPorts",
+                  "vconfig add eth0 2;vconfig add eth0 3;vconfig add eth0 4;vconfig add eth0 5");
+  return 0;
+}
+--
+undefined4 oal_intf_deleteVirtualPorts(void)
+
+{
+  util_execSystem("oal_intf_deleteVirtualPorts",
+                  "vconfig rem eth0.2;vconfig rem eth0.3;vconfig rem eth0.4;vconfig rem eth0.5");
+  util_execSystem("oal_intf_deleteVirtualPorts","echo 0 > /proc/tplink/eth_vlan");
+  return 0;
+}
+
+--
+oal_intf_enableIntf(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4)
+
+{
+  util_execSystem("oal_intf_enableIntf","ifconfig %s up",param_1,param_4,&_gp_1);
+  return 0;
+}
+
+--
+oal_intf_disableIntf(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4)
+
+{
+  util_execSystem("oal_intf_disableIntf","ifconfig %s down",param_1,param_4,&_gp_1);
+  return 0;
+}
+
+--
+  
+  iVar1 = strncmp(param_3,"0.0.0.0",7);
+  if (iVar1 == 0) {
+    util_execSystem("oal_intf_setIntf","ifconfig %s %s up",param_1,param_2);
+  }
+  else {
+    util_execSystem("oal_intf_setIntf","ifconfig %s %s netmask %s up",param_1,param_2,param_3);
+  }
+  oal_util_setProcLanAddr(param_1,param_2);
+  return 0;
+--
+        if (iVar1 == 0) {
+          return 0;
+        }
+        util_execSystem("oal_intf_setIfMac","ifconfig %s down",param_1);
+        util_execSystem("oal_intf_setIfMac","ifconfig %s hw ether %s up",param_1,param_2);
+        return 0;
+      }
+      close(iVar1);
+--
+    cdbg_printf(8,"prepareDropbear",0x11a,"get OID_USER_CFG error.\n");
+  }
+  FUN_00099e00(auStack_d8);
+  util_execSystem("prepareDropbear","dropbearkey -t rsa -f %s",
+                  "/var/tmp/dropbear/dropbear_rsa_host_key");
+  util_execSystem("prepareDropbear","dropbearkey -t dss -f %s",
+                  "/var/tmp/dropbear/dropbear_dss_host_key");
+  util_execSystem("prepareDropbear","dropbear -p %d -r %s -d %s -A %s",0x16,
+                  "/var/tmp/dropbear/dropbear_rsa_host_key",
+                  "/var/tmp/dropbear/dropbear_dss_host_key","/var/tmp/dropbear/dropbearpwd");
+  os_threadExit(0);
+--
+                param_1);
+    return 0x120c;
+  }
+  util_execSystem("oal_app_checkTcpPortStat","netstat -lntp > %s",acStack_160);
+  __stream = fopen(acStack_160,"r");
+  if (__stream == (FILE *)0x0) {
+    cdbg_printf(8,"oal_app_checkTcpPortStat",0x205,"open file[%s] failed.",acStack_160);
+--
+
+{
+  oal_dhcps_updateDhcpsCfg(0x25,0,0,2);
+  util_execSystem("oal_startDhcps","dhcpd %s","/var/tmp/dconf/udhcpd.conf");
+  return 0;
+}
+
+--
+           "upnpd  -L  %s  -W  %s  -en  %d -P %s  -nat %d -port %d  -url  %s  -ma  %s  -mn  %s  -mv  %s  -desc  %s &\n"
+           ,&DAT_000c0a1c,param_1,param_3 & 0xff,param_9,param_2 & 0xff,(uint)param_10,param_4,
+           param_5,param_6,param_7,param_8,&_gp_1);
+  system(acStack_208);
+  return 0;
+}
+
+--
+  else {
+    if (local_20 != 0) {
+LAB_0009c548:
+      util_execSystem("oal_addStaticRoute","ip route add to %s/%s via %s dev %s table %s",&local_30,
+                      iVar4,param_1 + 0x2c,&local_40,local_20);
+      util_execSystem("oal_addStaticRoute","ip route flush cache");
+      return;
+    }
+    util_execSystem("oal_addStaticRoute","route add -host %s dev %s",param_1 + 0x2c,&local_40);
+  }
+  puVar3 = &local_40;
+  if (*(char *)(param_1 + 0x2c) == '\0') {
+--
+    puVar3 = (undefined4 *)(param_1 + 0x2c);
+    pcVar2 = "route add -net %s netmask %s gw %s dev %s";
+  }
+  util_execSystem("oal_addStaticRoute",pcVar2,&local_30,iVar4,puVar3);
+  return;
+}
+
+--
+  cnet_addrStrToNum(local_20,&local_38);
+  cnet_addrNumToStr(local_38 & local_34,&local_30);
+  if (param_3 == 0) {
+    util_execSystem("oal_delStaticRoute","route del -net %s netmask %s",&local_30,local_20);
+  }
+  else {
+    util_execSystem("oal_delStaticRoute","ip route del %s/%s table %s",&local_30,local_20,param_3);
+    util_execSystem("oal_delStaticRoute","ip route flush cache");
+  }
+  if ((param_2 != '\0') && (param_3 == 0)) {
+    util_execSystem("oal_delStaticRoute","route del -host %s",param_1 + 0x2c);
+  }
+  return;
+}
+--
+    iVar1 = oal_route_getDefaultGatewayHost();
+    if (iVar1 != 0) {
+      cnet_addrNumToStr(iVar1,auStack_28);
+      util_execSystem("oal_setDefaultRoute","route del -host %s dev %s",auStack_28,param_1);
+    }
+    util_execSystem("oal_setDefaultRoute","route del default");
+  }
+  iVar1 = strncmp(param_2,"0.0.0.0",7);
+  if (iVar1 != 0) {
+    iVar1 = oal_route_defaultGatewayNeedHost(param_1,param_2);
+    if ((iVar1 == 1) && (iVar1 = oal_route_ifHasHost(param_1,param_2), iVar1 == 0)) {
+      util_execSystem("oal_setDefaultRoute","route add -host %s dev %s",param_2,param_1);
+    }
+    util_execSystem("oal_setDefaultRoute","route add default gw %s dev %s",param_2,param_1);
+    iVar1 = ifHasDefaultGW();
+    if (iVar1 == 0) {
+      util_execSystem("oal_setDefaultRoute","route add default gw %s dev %s",param_2,param_1);
+      iVar1 = ifHasDefaultGW();
+      if (iVar1 == 0) {
+        util_execSystem("oal_setDefaultRoute","route add default gw %s dev %s",param_2,param_1);
+        goto LAB_0009d308;
+      }
+    }
+--
+LAB_0009d308:
+  iVar1 = oal_route_ifHasTheSameDestHost(param_2);
+  if (iVar1 != 0) {
+    util_execSystem("oal_setDefaultRoute","route del -host %s dev %s",param_2,param_1);
+  }
+  return;
+}
+--
+  cnet_addrNumToStr(param_2,&local_28);
+  iVar1 = oal_ipt_addDnsRules(&local_18,&local_28);
+  if (iVar1 == 0) {
+    util_execSystem("oal_net_addDNS","echo \"nameserver %s\" > %s",&local_28,"/var/tmp/resolv.conf")
+    ;
+  }
+  return iVar1;
+--
+  }
+  cnet_addrNumToStr(param_2,&local_20);
+  if (param_3 != (char *)0x0) {
+    util_execSystem("oal_dmz_addDmzHost",
+                    "iptables -t nat -I PREROUTING_DMZ -d %s \t\t-j DNAT --to-destination %s",
+                    param_3,&local_20);
+    util_execSystem("oal_dmz_addDmzHost",
+                    "iptables -A FORWARD_DMZ -i %s -d %s -m conntrack --ctstate DNAT -j ACCEPT",
+                    param_1,&local_20);
+    util_execSystem("oal_dmz_addDmzHost",
+                    "iptables -t nat -I PREROUTING_DMZ 1 -p icmp \t--icmp-type echo-request -d %s -j ACCEPT"
+                    ,param_3);
+  }
+--
+  }
+  cnet_addrNumToStr(param_2,&local_20);
+  if (param_3 != (char *)0x0) {
+    util_execSystem("oal_dmz_delDmzHost",
+                    "iptables -t nat -D PREROUTING_DMZ -d %s \t\t-j DNAT --to-destination %s",
+                    param_3,&local_20);
+    util_execSystem("oal_dmz_delDmzHost",
+                    "iptables -D FORWARD_DMZ -i %s -d %s -m conntrack --ctstate DNAT -j ACCEPT",
+                    param_1,&local_20);
+    util_execSystem("oal_dmz_delDmzHost",
+                    "iptables -t nat -D PREROUTING_DMZ -p icmp \t--icmp-type echo-request -d %s -j ACCEPT"
+                    ,param_3);
+  }
+--
+    __s1 = (char *)(param_2 + 0x14);
+    iVar1 = strcmp(__s1,"TCP");
+    if ((iVar1 == 0) || (iVar1 = strcmp(__s1,"TCP or UDP"), iVar1 == 0)) {
+      util_execSystem("oal_vs_addVirtualServer",
+                      "iptables -t nat -A PREROUTING_VS -d %s -p tcp \t\t--dport %d:%d -j DNAT --to-destination %s:%d-%d"
+                      ,&local_28,*(undefined4 *)(param_2 + 4),*(undefined4 *)(param_2 + 8),
+                      param_2 + 0x1f,*(undefined4 *)(param_2 + 0xc),*(undefined4 *)(param_2 + 0x10))
+      ;
+      util_execSystem("oal_vs_addVirtualServer",
+                      "iptables -A FORWARD_VS -i %s -p tcp \t\t--dport %d:%d -d %s -j ACCEPT",
+                      param_1,*(undefined4 *)(param_2 + 0xc),*(undefined4 *)(param_2 + 0x10),
+                      param_2 + 0x1f);
+--
+    if ((iVar1 != 0) && (iVar1 = strcmp(__s1,"TCP or UDP"), iVar1 != 0)) {
+      return 0;
+    }
+    util_execSystem("oal_vs_addVirtualServer",
+                    "iptables -t nat -A PREROUTING_VS -d %s -p udp \t\t--dport %d:%d -j DNAT --to-destination %s:%d-%d"
+                    ,&local_28,*(undefined4 *)(param_2 + 4),*(undefined4 *)(param_2 + 8),
+                    param_2 + 0x1f,*(undefined4 *)(param_2 + 0xc),*(undefined4 *)(param_2 + 0x10));
+    util_execSystem("oal_vs_addVirtualServer",
+                    "iptables -A FORWARD_VS -i %s -p udp \t\t--dport %d:%d -d %s -j ACCEPT",param_1,
+                    *(undefined4 *)(param_2 + 0xc),*(undefined4 *)(param_2 + 0x10),param_2 + 0x1f);
+    return 0;
+--
+    __s1 = (char *)(param_2 + 0x14);
+    iVar1 = strcmp(__s1,"TCP");
+    if ((iVar1 == 0) || (iVar1 = strcmp(__s1,"TCP or UDP"), iVar1 == 0)) {
+      util_execSystem("oal_vs_delVirtualServer",
+                      "iptables -t nat -D PREROUTING_VS -d %s -p tcp \t\t--dport %d:%d -j DNAT --to-destination %s:%d-%d"
+                      ,&local_28,*(undefined4 *)(param_2 + 4),*(undefined4 *)(param_2 + 8),
+                      param_2 + 0x1f,*(undefined4 *)(param_2 + 0xc),*(undefined4 *)(param_2 + 0x10))
+      ;
+      util_execSystem("oal_vs_delVirtualServer",
+                      "iptables -D FORWARD_VS -i %s -p tcp \t\t--dport %d:%d -d %s -j ACCEPT",
+                      param_1,*(undefined4 *)(param_2 + 0xc),*(undefined4 *)(param_2 + 0x10),
+                      param_2 + 0x1f);
+--
+    if ((iVar1 != 0) && (iVar1 = strcmp(__s1,"TCP or UDP"), iVar1 != 0)) {
+      return 0;
+    }
+    util_execSystem("oal_vs_delVirtualServer",
+                    "iptables -t nat -D PREROUTING_VS -d %s -p udp \t\t--dport %d:%d -j DNAT --to-destination %s:%d-%d"
+                    ,&local_28,*(undefined4 *)(param_2 + 4),*(undefined4 *)(param_2 + 8),
+                    param_2 + 0x1f,*(undefined4 *)(param_2 + 0xc),*(undefined4 *)(param_2 + 0x10));
+    util_execSystem("oal_vs_delVirtualServer",
+                    "iptables -D FORWARD_VS -i %s -p udp \t\t--dport %d:%d -d %s -j ACCEPT",param_1,
+                    *(undefined4 *)(param_2 + 0xc),*(undefined4 *)(param_2 + 0x10),param_2 + 0x1f);
+    return 0;
+--
+        puVar3 = &local_40;
+        do {
+          if (*(short *)puVar3 != 0) {
+            util_execSystem("oal_pt_addPortTrigger",
+                            "iptables -A FORWARD_PT -i br+ -p %s -j TRIGGER --trigger-type out --trigger-proto %s --trigger-match %d-%d --trigger-relate %d-%d"
+                            ,&local_48,&local_44,*(undefined4 *)(param_2 + 4),
+                            *(undefined4 *)(param_2 + 4),*(short *)puVar3,
+--
+          }
+          puVar3 = puVar3 + 1;
+        } while (puVar3 != auStack_2c);
+        util_execSystem("oal_pt_addPortTrigger",
+                        "iptables -A FORWARD_PT -j TRIGGER --trigger-type in");
+        util_execSystem("oal_pt_addPortTrigger",
+                        "iptables -t nat -A PREROUTING_PT -i %s -j TRIGGER \t\t--trigger-type dnat",
+                        param_1);
+        iVar1 = 0;
+--
+        puVar3 = &local_40;
+        do {
+          if (*(short *)puVar3 != 0) {
+            util_execSystem("oal_pt_delPortTrigger",
+                            "iptables -D FORWARD_PT -i br+ -p %s -j TRIGGER --trigger-type out --trigger-proto %s --trigger-match %d-%d --trigger-relate %d-%d"
+                            ,&local_48,&local_44,*(undefined4 *)(param_2 + 4),
+                            *(undefined4 *)(param_2 + 4),*(short *)puVar3,
+--
+          }
+          puVar3 = puVar3 + 1;
+        } while (puVar3 != auStack_2c);
+        util_execSystem("oal_pt_delPortTrigger",
+                        "iptables -D FORWARD_PT -j TRIGGER --trigger-type in");
+        util_execSystem("oal_pt_delPortTrigger",
+                        "iptables -t nat -D PREROUTING_PT -i %s -j TRIGGER \t\t--trigger-type dnat",
+                        param_1);
+        iVar1 = 0;
+--
+  
+  if (param_1 - 1U < 4) {
+    if (param_1 == 1) {
+      util_execSystem("oal_forward_deleteAll","iptables -F FORWARD_VS");
+      util_execSystem("oal_forward_deleteAll","iptables -t nat -F PREROUTING_VS");
+      pcVar1 = "iptables -t nat -F POSTROUTING_NATLOOPBACK_VS";
+    }
+    else {
+--
+        if (param_1 != 4) {
+          return 0;
+        }
+        util_execSystem("oal_forward_deleteAll","iptables -t nat -F PREROUTING_DMZ");
+        util_execSystem("oal_forward_deleteAll","iptables -t nat -F POSTROUTING_NATLOOPBACK_DMZ");
+        util_execSystem("oal_forward_deleteAll","iptables -F FORWARD_DMZ");
+        return 0;
+      }
+      util_execSystem("oal_forward_deleteAll","iptables -F FORWARD_PT");
+      pcVar1 = "iptables -t nat -F PREROUTING_PT";
+    }
+    uVar2 = 0;
+    util_execSystem("oal_forward_deleteAll",pcVar1);
+  }
+  else {
+    cdbg_printf(8,"oal_forward_deleteAll",0x39f,"Forward type %d[%d,%d]!",param_1,1,4);
+--
+        pcVar3 = pcVar3 + iVar1;
+      }
+      sprintf(pcVar3," -j SNAT --to-source %s",param_2);
+      util_execSystem("oal_forward_natLoopBack","%s",acStack_128);
+    }
+  }
+  return 0;
+--
+        pcVar9 = "DROP";
+      }
+      sprintf(pcVar11,"-j %s",pcVar9);
+      util_execSystem("setRule",acStack_234);
+      if (*(char *)(param_1 + 0x15) == '\0') {
+        if (param_3 == 0) {
+          return 0;
+--
+        pcVar9 = "iptables -%c FWRULE -i br+ -m mac --mac-source %s -j %s";
+      }
+      sprintf(acStack_234,pcVar9,uVar8,iVar2,pcVar11);
+      util_execSystem("setRule",acStack_234);
+      return 0;
+    }
+  }
+--
+      }
+      iVar2 = iVar2 + 1;
+      sprintf(pcVar11 + iVar4,"-j %s",pcVar9);
+      util_execSystem("setRule",acStack_234);
+    } while (iVar2 != 3);
+    return 0;
+  }
+--
+      pcVar9 = "DROP";
+    }
+    sprintf(pcVar11,"-j %s",pcVar9);
+    util_execSystem("setRule",acStack_234);
+    uVar3 = uVar3 + 1;
+    if ((*(char *)(param_1 + 0x16) != '\x03') || (2 < (int)uVar3)) {
+      return 0;
+--
+    uVar1 = 0x41;
+  }
+  sprintf(acStack_108,"iptables -%c PCDROP -m mac --mac-source %s -j DROP",uVar1,param_2);
+  util_execSystem("oal_fw_setParentCtrlDefaultAction",acStack_108);
+  return 0;
+}
+
+--
+{
+  char *pcVar1;
+  
+  util_execSystem("oal_fw_setDefaultAction","iptables -D FIREWALL -j DROP");
+  util_execSystem("oal_fw_setDefaultAction",
+                  "iptables -D FIREWALL -m connmark --mark 0x80000000/0x80000000 -j ACCEPT");
+  if (param_1 == '\0') {
+    pcVar1 = "ebtables -P FIREWALL ACCEPT";
+  }
+  else {
+    util_execSystem("oal_fw_setDefaultAction",
+                    "iptables -I FIREWALL 1 -m connmark --mark 0x80000000/0x80000000 -j ACCEPT");
+    util_execSystem("oal_fw_setDefaultAction","iptables -A FIREWALL -j DROP");
+    pcVar1 = "ebtables -P FIREWALL DROP";
+  }
+  util_execSystem("oal_fw_setDefaultAction",pcVar1);
+  return 0;
+}
+
+--
+  
+  pcVar1 = "iptables -t filter -D FORWARD -i %s \t\t\t-m conntrack --ctstate NEW -j ACCEPT";
+  if (param_2 == '\0') {
+    util_execSystem("oal_fw_setSpiRule",
+                    "iptables -t filter -D FORWARD -i %s \t\t\t-m conntrack --ctstate NEW -j ACCEPT"
+                    ,param_1);
+    pcVar1 = "iptables -t filter -A FORWARD -i %s \t\t\t-m conntrack --ctstate NEW -j ACCEPT";
+  }
+  util_execSystem("oal_fw_setSpiRule",pcVar1,param_1);
+  return 0;
+}
+
+--
+  char *pcVar1;
+  
+  if (param_1 == '\0') {
+    util_execSystem("oal_fw_setFwEnabeld","iptables -F FIREWALL");
+    util_execSystem("oal_fw_setFwEnabeld","ebtables -D FORWARD -j FIREWALL");
+    pcVar1 = "iptables -D CTL -j FIREWALL";
+  }
+  else {
+    util_execSystem("oal_fw_setFwEnabeld","iptables -D CTL -j FIREWALL");
+    util_execSystem("oal_fw_setFwEnabeld","iptables -I CTL -j FIREWALL");
+    util_execSystem("oal_fw_setFwEnabeld","iptables -I FIREWALL 1 -j FWRULE");
+    pcVar1 = "ebtables -I FORWARD 1 -j FIREWALL";
+  }
+  util_execSystem("oal_fw_setFwEnabeld",pcVar1);
+  return 0;
+}
+
+--
+  char *pcVar1;
+  
+  if (param_1 == '\0') {
+    util_execSystem("oal_fw_setPcEnabeld","iptables -F PARENTCTL");
+    pcVar1 = "iptables -D CTL -j PARENTCTL";
+  }
+  else {
+    util_execSystem("oal_fw_setPcEnabeld","iptables -D CTL -j PARENTCTL");
+    util_execSystem("oal_fw_setPcEnabeld","iptables -I CTL -j PARENTCTL");
+    util_execSystem("oal_fw_setPcEnabeld",
+                    "iptables -A PARENTCTL -m connmark --mark 0x80000000/0x80000000 -j ACCEPT");
+    util_execSystem("oal_fw_setPcEnabeld","iptables -A PARENTCTL -j PCRULE");
+    pcVar1 = "iptables -A PARENTCTL -j PCDROP";
+  }
+  util_execSystem("oal_fw_setPcEnabeld",pcVar1);
+  return 0;
+}
+
+--
+    _Var2 = getpid();
+    sprintf(acStack_e8,"/var/tmp/brx%d.lst",_Var2);
+    sprintf(acStack_a8,"brctl show > %s",acStack_e8);
+    util_execSystem("oal_fw_ebtables",acStack_a8);
+    __stream = fopen(acStack_e8,"r");
+    if (__stream == (FILE *)0x0) {
+      return;
+--
+        if ((char)local_110 != '\0') {
+          sprintf(acStack_a8,"ebtables -D FORWARD --logical-in %s --logical-out %s -j ACCEPT",
+                  &local_110,&local_110);
+          util_execSystem("oal_fw_ebtables",acStack_a8);
+          if (param_2 != 0) {
+            sprintf(acStack_a8,"ebtables -I FORWARD 1 --logical-in %s --logical-out %s -j ACCEPT",
+                    &local_110,&local_110);
+            util_execSystem("oal_fw_ebtables",acStack_a8);
+          }
+        }
+        strcpy((char *)&local_110,(char *)&local_120);
+--
+    fclose(__stream);
+    uVar5 = 0;
+    sprintf(acStack_a8,"rm -f %s",acStack_e8);
+    util_execSystem("oal_fw_ebtables",acStack_a8);
+    uVar4 = param_2;
+  }
+  else {
+--
+  if ((char)local_110 != '\0') {
+    sprintf(acStack_a8,"ebtables -D FORWARD --logical-in %s --logical-out %s -j ACCEPT",&local_110,
+            &local_110);
+    util_execSystem("oal_fw_ebtables",acStack_a8);
+    if ((uVar4 != 0) && (uVar5 == 0)) {
+      sprintf(acStack_a8,"ebtables -I FORWARD 1 --logical-in %s --logical-out %s -j ACCEPT",
+              &local_110,&local_110);
+      util_execSystem("oal_fw_ebtables",acStack_a8);
+    }
+  }
+  return;
+--
+  pcVar4 = (char *)0x1;
+  if (0 < iStack_30) {
+    while( true ) {
+      uStack_234 = system(acStack_230);
+      uVar2 = uStack_234 & 0x7f;
+      if ((int)uStack_234 < 0) {
+        if (uStack_234 == 0xffffffff) {
+--
+  sprintf((char *)&local_224,"unit%d",iVar2);
+  iVar3 = util_findSystemProc(&DAT_000d30cc,0,auStack_21c,&local_224,&local_228);
+  if (iVar3 != 0) {
+    util_execSystem("oal_wan_initPPPOnDemand","kill -9 %d",local_228);
+    sleep(1);
+  }
+  iVar3 = 0x32;
+--
+      goto LAB_000a19e0;
+    }
+    oal_intf_waitIntfExists(pcVar7,"oal_wan_initPPPOnDemand");
+    util_execSystem("oal_wan_initPPPOnDemand","pppd pppoe %s demand idle %d unit %d\t&",pcVar7,
+                    *(int *)(param_1 + 0x8c) * 0x3c,iVar2);
+  }
+  else {
+    iVar3 = strcmp((char *)(param_1 + 0x367),"PPPoA");
+    if (iVar3 == 0) {
+      util_execSystem("oal_wan_initPPPOnDemand",
+                      "pppd pppoa 0.35 llc-encaps demand \t\t\tidle %d unit %d &",
+                      *(int *)(param_1 + 0x8c) * 0x3c,iVar2);
+    }
+--
+    sprintf((char *)&local_22c,"unit%d",iVar2);
+    iVar2 = util_findSystemProc(&DAT_000d30cc,0,auStack_224,&local_22c,&local_230);
+    if (iVar2 != 0) {
+      util_execSystem("oal_wan_initPPPoE","kill %d",local_230);
+    }
+    iVar2 = oal_intf_ifExist(__s);
+    if (iVar2 != 0) {
+--
+    memset(auStack_224,0,0x200);
+    iVar3 = FUN_000a01a0(param_1,auStack_224);
+    if (iVar3 == 0) {
+      util_execSystem("oal_wan_initPPPoE",auStack_224);
+      oal_intf_waitIntfExists(__s);
+    }
+    else {
+--
+  local_90 = 0;
+  iVar1 = util_findSystemProc("bpalogin",0,auStack_8c,0,&local_90);
+  if (iVar1 != 0) {
+    util_execSystem("oal_wan_stopBpa","kill %d",local_90);
+  }
+  return 0;
+}
+--
+  local_218 = 0;
+  iVar1 = util_findSystemProc("bpalogin",0,acStack_214,0,&local_218);
+  if (iVar1 != 0) {
+    util_execSystem("oal_wan_initBpa","kill %d",local_218);
+  }
+  memset(acStack_214,0,0x200);
+  snprintf(acStack_214,0x200,"bpalogin ");
+--
+    sVar2 = strlen(acStack_214);
+    snprintf(acStack_214 + sVar2,0x200 - sVar2," authdomain \"%s\" ",param_1 + 0x324);
+  }
+  util_execSystem("oal_wan_initBpa",acStack_214);
+  return 0;
+}
+
+--
+    if (iVar2 != 0) {
+      pcVar3 = strstr(acStack_20c,"demand");
+      if (pcVar3 == (char *)0x0) {
+        util_execSystem("oal_wan_stopPpp","kill %d",local_218);
+      }
+    }
+  }
+--
+      return 0;
+    }
+    if (local_810 != 0) {
+      util_execSystem("oal_wan_startPpp","kill -9 %d");
+      iVar2 = 10;
+      oal_util_sleep(1);
+      do {
+        iVar4 = oal_intf_ifExist(pcVar6);
+        if (iVar4 == 0) break;
+        util_execSystem("oal_wan_startPpp","kill -9 %d",local_810);
+        iVar2 = iVar2 + -1;
+        oal_util_sleep(1);
+      } while (iVar2 != 0);
+--
+    }
+  }
+LAB_000a2418:
+  util_execSystem("oal_wan_startPpp",acStack_6fc);
+  oal_intf_waitIntfExists(pcVar6);
+  return 0;
+}
+--
+    iVar2 = util_findSystemProc(&DAT_000d30cc,0,auStack_214,&local_21c,&local_220);
+    uVar3 = 0;
+    if (iVar2 != 0) {
+      util_execSystem("oal_wan_removePppIntf","kill %d",local_220);
+    }
+  }
+  return uVar3;
+--
+      sprintf((char *)&local_22c,"unit%d",iVar1);
+      util_findSystemProc(&DAT_000d30cc,0,auStack_224,&local_22c,&local_230);
+      if (local_230 != 0) {
+        util_execSystem("oal_wan_initPPPoA","kill -9 %d");
+        iVar1 = 10;
+        oal_util_sleep(1);
+        do {
+          iVar3 = oal_intf_ifExist((char *)(param_1 + 0x2a0));
+          if (iVar3 == 0) break;
+          util_execSystem("oal_wan_initPPPoA","kill -9 %d",local_230);
+          iVar1 = iVar1 + -1;
+          oal_util_sleep(1);
+        } while (iVar1 != 0);
+      }
+      memset(auStack_224,0,0x200);
+      FUN_000a0c7c(param_1,auStack_224,param_2);
+      util_execSystem("oal_wan_initPPPoA",auStack_224);
+    }
+  }
+  return 0;
+--
+  
+  memset(acStack_50,0,0x40);
+  sprintf(acStack_50,"ifconfig %s mtu %d",param_1,param_2);
+  util_execSystem("oal_wan_setIfMtu",acStack_50);
+  oal_ipt_delMssRules(param_1,param_2);
+  oal_ipt_addMssRules(param_1,param_2);
+  return 0;
+--
+            (char *)(param_1 + 0xd6),(char *)(param_1 + 0xe6));
+    sVar4 = strlen(acStack_1130);
+    sprintf(acStack_1130 + sVar4," mtu %d",*(undefined4 *)(param_1 + 0x14c));
+    util_execSystem("oal_wan_initIpoa",acStack_1130);
+    memset(acStack_1130,0,0x100);
+    iVar1 = oal_wan_atmVpiVciStrToNum(param_2 + 0x2f,&local_1134,&local_1138);
+    if (iVar1 == 0) {
+--
+        }
+        iVar5 = iVar5 + 1;
+      } while (iVar5 < 10);
+      util_execSystem("oal_wan_initIpoa",acStack_1130);
+    }
+    else {
+      cdbg_printf(8,"oal_wan_initIpoa",0x80d,"You specifief a invalid %s",param_2 + 0x2f);
+--
+  
+  iVar1 = strncmp("0.0.0.0","0.0.0.0",7);
+  if (iVar1 == 0) {
+    util_execSystem("oal_intf_setIntf","ifconfig %s %s up",param_1,"0.0.0.0");
+  }
+  else {
+    util_execSystem("oal_intf_setIntf","ifconfig %s %s netmask %s up",param_1,"0.0.0.0","0.0.0.0");
+  }
+  oal_util_setProcLanAddr(param_1,"0.0.0.0");
+  return 0;
+--
+  }
+  else {
+    util_findSystemProc("wanType",1,0,0,auStack_18);
+    util_execSystem("oal_wanTypeDetect","wanType %s",param_1);
+    uVar1 = 0;
+  }
+  return uVar1;
+--
+    oal_ipt_forbidLanPing(1);
+  }
+  else {
+    util_execSystem("oal_ddos_addPingRule",
+                    "iptables -t filter -I INPUT 4 ! -i br+ -p icmp --icmp-type echo-request -j ACCEPT\n"
+                   );
+  }
+--
+    oal_ipt_forbidLanPing(0);
+  }
+  else {
+    util_execSystem("oal_ddos_delPingRule",
+                    "iptables -t filter -D INPUT ! -i br+ -p icmp --icmp-type echo-request -j ACCEPT\n"
+                   );
+  }
+--
+  memset(acStack_58,0,0x50);
+  oal_ipt_setDDoSRules(0,&DAT_000d575c);
+  sprintf(acStack_58,"rm -f %s","/var/tmp/dosHost");
+  util_execSystem("ddos_clearAll",acStack_58);
+  return 0;
+}
+
+--
+  else {
+    pcVar1 = "rmmod";
+  }
+  util_execSystem("setupModules","%s %s/%s.ko",pcVar1,"/lib/modules/kmdir/kernel/net",param_1);
+  return;
+}
+
+--
+      FUN_000a4430("ipv4/netfilter/nf_nat_pptp",0);
+      pcVar1 = "iptables -D FORWARD_VPN_PASSTHROUGH  -p tcp --dport 1723 -j DROP";
+LAB_000a45ec:
+      util_execSystem("oal_openAlg",pcVar1);
+      return 0;
+    }
+    if (param_1 == 2) {
+--
+      FUN_000a4430("ipv4/netfilter/nf_nat_proto_gre",1);
+      pcVar1 = "iptables -A FORWARD_VPN_PASSTHROUGH  -p tcp --dport 1723 -j DROP";
+LAB_000a480c:
+      util_execSystem("oal_closeAlg",pcVar1);
+      return 0;
+    }
+    if (param_1 == 2) {
+--
+
+{
+  FUN_000a4dd8();
+  util_execSystem("oal_startDynDns","dyndns %s","/var/tmp/dconf/dyndns.conf");
+  return 0;
+}
+
+--
+
+{
+  FUN_000a4bcc();
+  util_execSystem("oal_startNoipDns","noipdns %s","/var/tmp/dconf/noipdns.conf");
+  return 0;
+}
+
+--
+
+{
+  FUN_000a48e0();
+  util_execSystem("oal_startCmxDns","cmxdns %s","/var/tmp/dconf/cmxdns.conf");
+  return 0;
+}
+
+--
+  fputs("iptables -A INPUT -p udp ! -i br+ --sport 67 --dport 68 -j ACCEPT\n",__stream);
+  fputs("iptables -A INPUT -p udp --dport 161 -j ACCEPT\n",__stream);
+  fclose(__stream);
+  system("chmod 777 /var/tmp/dconf/rc.router");
+                    // WARNING: Treating indirect jump as call
+  util_execSystem("ipt_init","/var/tmp/dconf/rc.router");
+  return;
+}
+
+--
+void oal_ipt_fwdMark(char param_1)
+
+{
+  util_execSystem("oal_ipt_fwdMark","iptables -t filter -D FORWARD -o br+ -j FWD_MARK_WAN\n");
+  util_execSystem("oal_ipt_fwdMark","iptables -t filter -D FORWARD -i br+ -j FWD_MARK_LAN\n");
+  if (param_1 != '\0') {
+    util_execSystem("oal_ipt_fwdMark","iptables -t filter -I FORWARD -o br+ -j FWD_MARK_WAN\n");
+                    // WARNING: Treating indirect jump as call
+    util_execSystem("oal_ipt_fwdMark","iptables -t filter -I FORWARD -i br+ -j FWD_MARK_LAN\n");
+    return;
+  }
+  return;
+--
+void oal_ipt_fwDdos(char param_1)
+
+{
+  util_execSystem("oal_ipt_fwDdos","iptables -D FORWARD -j FIREWALL_DDOS\n");
+  if (param_1 != '\0') {
+                    // WARNING: Treating indirect jump as call
+    util_execSystem("oal_ipt_fwDdos","iptables -I FORWARD -j FIREWALL_DDOS\n");
+    return;
+  }
+  return;
+--
+void oal_ipt_addBridgeIsolationRules(undefined4 param_1)
+
+{
+  util_execSystem("oal_ipt_addBridgeIsolationRules",
+                  "iptables -t filter -I BRIDGE_ISOLATION -i br+ -o %s -j DROP",param_1);
+  util_execSystem("oal_ipt_addBridgeIsolationRules",
+                  "iptables -t filter -I BRIDGE_ISOLATION -i %s -o br+ -j DROP",param_1);
+                    // WARNING: Treating indirect jump as call
+  util_execSystem("oal_ipt_addBridgeIsolationRules",
+                  "iptables -t filter -I BRIDGE_ISOLATION -i %s -o %s -j ACCEPT",param_1,param_1);
+  return;
+}
+--
+void oal_ipt_delBridgeIsolationRules(undefined4 param_1)
+
+{
+  util_execSystem("oal_ipt_delBridgeIsolationRules",
+                  "iptables -t filter -D BRIDGE_ISOLATION -i br+ -o %s -j DROP",param_1);
+  util_execSystem("oal_ipt_delBridgeIsolationRules",
+                  "iptables -t filter -D BRIDGE_ISOLATION -i %s -o br+ -j DROP",param_1);
+                    // WARNING: Treating indirect jump as call
+  util_execSystem("oal_ipt_delBridgeIsolationRules",
+                  "iptables -t filter -D BRIDGE_ISOLATION -i %s -o %s -j ACCEPT",param_1,param_1);
+  return;
+}
+--
+
+{
+                    // WARNING: Treating indirect jump as call
+  util_execSystem("oal_ipt_addLanRules","iptables -t filter -A INPUT -i br+ -j ACCEPT\n");
+  return;
+}
+
+--
+
+{
+                    // WARNING: Treating indirect jump as call
+  util_execSystem("oal_ipt_delLanRules","iptables -t filter -D INPUT -i br+ -j ACCEPT\n");
+  return;
+}
+
+--
+
+{
+  if (param_2 != '\0') {
+    util_execSystem("oal_ipt_addNatRules",
+                    "iptables -t nat -A POSTROUTING -o %s -j MASQUERADE --mode fullcone\n",param_1);
+  }
+                    // WARNING: Treating indirect jump as call
+  util_execSystem("oal_ipt_addNatRules","iptables -t nat -A POSTROUTING -o %s -j MASQUERADE\n",
+                  param_1);
+  return;
+}
+--
+
+{
+  if (param_2 != '\0') {
+    util_execSystem("oal_ipt_delNatRules",
+                    "iptables -t nat -D POSTROUTING -o %s -j MASQUERADE --mode fullcone\n",param_1);
+  }
+                    // WARNING: Treating indirect jump as call
+  util_execSystem("oal_ipt_delNatRules","iptables -t nat -D POSTROUTING -o %s -j MASQUERADE\n",
+                  param_1);
+  return;
+}
+--
+{
+  int iVar1;
+  
+  iVar1 = util_execSystem("oal_ipt_addDnsRules",
+                          "iptables -t nat -A PREROUTING -d %s -p tcp --dport 53 \t\t-j DNAT --to-destination %s\n"
+                          ,param_1,param_2);
+  if (iVar1 == 0) {
+                    // WARNING: Treating indirect jump as call
+    util_execSystem("oal_ipt_addDnsRules",
+                    "iptables -t nat -A PREROUTING -d %s -p udp --dport 53 \t\t-j DNAT --to-destination %s\n"
+                    ,param_1,param_2);
+    return;
+--
+{
+  int iVar1;
+  
+  iVar1 = util_execSystem("oal_ipt_delDnsRules",
+                          "iptables -t nat -D PREROUTING -d %s -p tcp --dport 53 \t\t-j DNAT --to-destination %s\n"
+                          ,param_1,param_2);
+  if (iVar1 == 0) {
+                    // WARNING: Treating indirect jump as call
+    util_execSystem("oal_ipt_delDnsRules",
+                    "iptables -t nat -D PREROUTING -d %s -p udp --dport 53 \t\t-j DNAT --to-destination %s\n"
+                    ,param_1,param_2);
+    return;
+--
+void oal_ipt_addMssRules(undefined4 param_1,int param_2)
+
+{
+  util_execSystem("oal_ipt_addMssRules",
+                  "iptables -t filter -I FORWARD 1 -o %s -p tcp --tcp-flags SYN,RST SYN \t\t-j TCPMSS --set-mss %d"
+                  ,param_1,param_2 + -0x28);
+                    // WARNING: Treating indirect jump as call
+  util_execSystem("oal_ipt_addMssRules",
+                  "iptables -t filter -I FORWARD 1 -i %s -p tcp --tcp-flags SYN,RST SYN \t\t-j TCPMSS --set-mss %d"
+                  ,param_1,param_2 + -0x28);
+  return;
+--
+  memset(acStack_120,0,0x80);
+  snprintf(acStack_120,0x7f,"%s -p tcp -m tcp --tcp-flags SYN,RST SYN -j TCPMSS --set-mss",local_20)
+  ;
+  util_execSystem("oal_ipt_delMssRules","iptables -S -t filter > /var/tmp/delMss");
+  __stream = fopen("/var/tmp/delMss","r+");
+  if (__stream == (FILE *)0x0) {
+    cdbg_printf(8,"oal_ipt_delMssRules",0x2e6,"open file error\n");
+--
+    } while (pcVar2 == (char *)0x0);
+    fclose(__stream);
+    if (pcVar2 != (char *)0x0) {
+      util_execSystem("oal_ipt_delMssRules","iptables -t filter -D FORWARD -o %s",pcVar2);
+      util_execSystem("oal_ipt_delMssRules","iptables -t filter -D FORWARD -i %s",pcVar2);
+    }
+  }
+  return;
+--
+    ;
+  }
+                    // WARNING: Treating indirect jump as call
+  util_execSystem("oal_ipt_forbidLanPing",pcVar1);
+  return;
+}
+
+--
+  char *pcVar1;
+  
+  if (param_1 == '\x01') {
+    util_execSystem("oal_ipt_setWanPort","iptables -t filter -A INPUT -p tcp --dport %d -j ACCEPT",
+                    param_2);
+    pcVar1 = "iptables -t nat -I PREROUTING 1 -p tcp --dport %d -j ACCEPT";
+  }
+  else {
+    util_execSystem("oal_ipt_setWanPort","iptables -t filter -D INPUT -p tcp --dport %d -j ACCEPT",
+                    param_2);
+    pcVar1 = "iptables -t nat -D PREROUTING -p tcp --dport %d -j ACCEPT";
+  }
+                    // WARNING: Treating indirect jump as call
+  util_execSystem("oal_ipt_setWanPort",pcVar1,param_2);
+  return;
+}
+
+--
+  }
+  sprintf(acStack_60,__format,param_1);
+code_r0x000a5d98:
+  util_execSystem("oal_ipt_setDDoSRules",acStack_60);
+  return;
+}
+
+--
+  undefined auStack_10 [8];
+  
+  util_findSystemProc("hostapd_wlan0",1,0,0,auStack_10);
+  util_execSystem("oal_wlan_KillDriver","ifconfig wlan0.0 down");
+  util_execSystem("oal_wlan_KillDriver","ifconfig wlan0 down");
+  util_execSystem("oal_wlan_KillDriver","rmmod mtlk");
+  return;
+}
+
+--
+void oal_wlan_StartART(undefined4 param_1)
+
+{
+  util_execSystem("oal_wlan_StartART","mkdir /tmp/dut");
+  util_execSystem("oal_wlan_StartART","mkdir /tmp/d");
+  util_execSystem("oal_wlan_StartART","tftp -g %s -r dut_images.tar.gz -l /tmp/d/dut_images.tar.gz",
+                  param_1);
+  util_execSystem("oal_wlan_StartART","tftp -g %s -r progmodels.tar.gz -l /tmp/d/progmodels.tar.gz",
+                  param_1);
+  util_execSystem("oal_wlan_StartART","tar -zxf /tmp/d/dut_images.tar.gz -C /tmp/d/");
+  util_execSystem("oal_wlan_StartART","tftp -g %s -r dutserver -l /tmp/dut/dutserver",param_1);
+  util_execSystem("oal_wlan_StartART","tftp -g %s -r mtlk.ko -l /tmp/dut/mtlk.ko",param_1);
+  util_execSystem("oal_wlan_StartART","chmod +x /tmp/dut/dutserver");
+  util_execSystem("oal_wlan_StartART",
+                  "echo \"/tmp/dut/dutserver /tmp/dut/mtlk.ko &\" >/tmp/dut/run_dut.sh");
+  util_execSystem("oal_wlan_StartART","chmod +x /tmp/dut/run_dut.sh");
+                    // WARNING: Treating indirect jump as call
+  util_execSystem("oal_wlan_StartART","/bin/sh /tmp/dut/run_dut.sh");
+  return;
+}
+
+--
+  sprintf(acStack_20,"%08d",param_2);
+  iVar1 = strcmp("Up",(char *)(param_1 + 0x468));
+  if (iVar1 == 0) {
+    util_execSystem("oal_wlan_ra_startWPSByPIN","iwpriv %s set WscConfMode=%d",param_1,7);
+    util_execSystem("oal_wlan_ra_startWPSByPIN","iwpriv %s set WscPinCode=%s",param_1,acStack_20);
+    util_execSystem("oal_wlan_ra_startWPSByPIN","iwpriv %s set WscMode=%d",param_1,1);
+    util_execSystem("oal_wlan_ra_startWPSByPIN","iwpriv %s set WscGetConf=%d",param_1,1);
+  }
+  return 0;
+}
+--
+  }
+  iVar1 = strcmp("Up",param_1 + 0x468);
+  if (iVar1 == 0) {
+    util_execSystem("oal_wlan_ra_setAclCfg","iwpriv %s set AccessPolicy=%d",param_2,local_28);
+    util_execSystem("oal_wlan_ra_setAclCfg","iwpriv %s set ACLClearAll=1",param_2);
+  }
+  for (; pcVar2 != (char *)0x0; pcVar2 = *(char **)(pcVar2 + 0x34)) {
+    iVar1 = strcmp(pcVar2 + 0x13,param_2);
+--
+      }
+      iVar1 = strcmp("Up",(char *)&local_38);
+      if ((iVar1 == 0) && (*pcVar2 == '\x01')) {
+        util_execSystem("oal_wlan_ra_setAclCfg","iwpriv %s set ACLAddEntry=\"%s\"",param_2,
+                        pcVar2 + 1);
+      }
+    }
+--
+      else {
+        pcVar4 = "cp /etc/SingleSKU_FCC.dat /var/Wireless/RT2860AP/SingleSKU.dat";
+      }
+      util_execSystem("oal_wlan_ra_setCountryRegion",pcVar4);
+      cVar2 = allCountry[iVar5 * 5 + 4];
+      bVar1 = DAT_000efc91 != cVar2;
+      if (bVar1) {
+        DAT_000efc91 = cVar2;
+      }
+      DAT_00105ff8 = (uint)bVar1;
+      util_execSystem("oal_wlan_ra_setCountryRegion","iwpriv %s set CountryRegion=%d",param_1);
+      return 0;
+    }
+    iVar7 = iVar6 * 5;
+--
+    if (iVar1 != 0) {
+      return 0;
+    }
+    util_execSystem("oal_wlan_ra_setSec","iwpriv %s set AuthMode=%s",param_2,acStack_1ac);
+    util_execSystem("oal_wlan_ra_setSec","iwpriv %s set EncrypType=%s",param_2,acStack_1b8);
+    util_execSystem("oal_wlan_ra_setSec","iwpriv %s set IEEE8021X=0",param_2);
+    if (local_1c0 == 2) {
+      if (*(char *)(param_1 + 0x160) != '\0') {
+        FUN_000a856c(auStack_f4,param_1 + 0x160);
+        util_execSystem("oal_wlan_ra_setSec","iwpriv %s set Key1=%s",param_2,auStack_f4);
+      }
+      if (*(char *)(param_1 + 0x1f0) != '\0') {
+        FUN_000a856c(auStack_f4,param_1 + 0x1f0);
+        util_execSystem("oal_wlan_ra_setSec","iwpriv %s set Key2=%s",param_2,auStack_f4);
+      }
+      if (*(char *)(param_1 + 0x280) != '\0') {
+        FUN_000a856c(auStack_f4,param_1 + 0x280);
+        util_execSystem("oal_wlan_ra_setSec","iwpriv %s set Key3=%s",param_2,auStack_f4);
+      }
+      if (*(char *)(param_1 + 0x310) != '\0') {
+        FUN_000a856c(auStack_f4,param_1 + 0x310);
+        util_execSystem("oal_wlan_ra_setSec","iwpriv %s set Key4=%s",param_2,auStack_f4);
+      }
+    }
+    util_execSystem("oal_wlan_ra_setSec","iwpriv %s set DefaultKeyID=%d",param_2,uVar2);
+    if (local_1c0 - 1U < 2) {
+      return 0;
+    }
+    FUN_000a856c(auStack_158,param_5);
+    util_execSystem("oal_wlan_ra_setSec","iwpriv %s set SSID=%s",param_2,auStack_158);
+    util_execSystem("oal_wlan_ra_setSec","iwpriv %s set RekeyInterval=%d",param_2,
+                    *(undefined4 *)(param_1 + 0xd0));
+    if ((local_1bc - 6U < 2) || (local_1bc == 9)) {
+      FUN_000a856c(auStack_f4,param_1 + 0x8d);
+      util_execSystem("oal_wlan_ra_setSec","iwpriv %s set WPAPSK=%s",param_2,auStack_f4);
+      return 0;
+    }
+    iVar1 = oal_wlan_getBrNamebyIfName(param_4,param_4,auStack_198);
+--
+        else {
+          pcVar3 = "killall -q  -SIGINT rtinicapd";
+        }
+        util_execSystem("oal_wlan_ra_setSec",pcVar3);
+        util_execSystem("oal_wlan_ra_setSec","iwpriv %s set IEEE8021X=0",param_2);
+        util_execSystem("oal_wlan_ra_setSec","iwpriv %s set SSID=%s",param_2,auStack_158);
+        util_execSystem("oal_wlan_ra_setSec","iwpriv %s set RADIUS_Server=%s",param_2,param_1 + 0xd4
+                       );
+        util_execSystem("oal_wlan_ra_setSec","iwpriv %s set RADIUS_Port=%d",param_2,
+                        *(undefined4 *)(param_1 + 0x114));
+        FUN_000a856c(auStack_f4,param_1 + 0x118);
+        util_execSystem("oal_wlan_ra_setSec","iwpriv %s set RADIUS_Key=%s",param_2,auStack_f4);
+        util_execSystem("oal_wlan_ra_setSec","iwpriv %s set EAPifname=%s",param_2,auStack_198);
+        util_execSystem("oal_wlan_ra_setSec","iwpriv %s set own_ip_addr=%s",param_2,auStack_178);
+        util_execSystem("oal_wlan_ra_setSec","iwpriv %s set SSID=%s",param_2,auStack_158);
+        sleep(4);
+        iVar1 = strcmp("2.4GHz",(char *)(param_4 + 1099));
+        if (iVar1 == 0) {
+--
+        else {
+          pcVar3 = "rtinicapd &";
+        }
+        util_execSystem("oal_wlan_ra_setSec",pcVar3);
+        return 0;
+      }
+      uVar2 = 0xb97;
+--
+  iVar2 = strcmp("Up",(char *)(param_1 + 0xb31));
+  if (iVar2 == 0) {
+    iVar2 = param_1 + 0xa89;
+    util_execSystem("oal_wlan_ra_setWlanWdsCfg","iwpriv %s set ApCliEnable=%d",iVar2,0);
+    pcVar3 = (char *)(param_1 + 0xa99);
+    if (*(char *)(param_1 + 0xb40) == '\0') {
+      pcVar3 = "00:00:00:00:00:00";
+    }
+    util_execSystem("oal_wlan_ra_setWlanWdsCfg","iwpriv %s set ApCliBssid=%s",iVar2,pcVar3);
+    util_execSystem("oal_wlan_ra_setWlanWdsCfg","iwpriv %s set ApCliAuthMode=%s",iVar2,acStack_16c);
+    util_execSystem("oal_wlan_ra_setWlanWdsCfg","iwpriv %s set ApCliEncrypType=%s",iVar2,acStack_178
+                   );
+    FUN_000a856c(auStack_f0,param_1 + 0xaf0);
+    if (iVar1 == 2) {
+      util_execSystem("oal_wlan_ra_setWlanWdsCfg","iwpriv %s set ApCliDefaultKeyID=%d",iVar2,uVar4);
+      util_execSystem("oal_wlan_ra_setWlanWdsCfg","iwpriv %s set ApCliKey1=%s",iVar2,auStack_f0);
+      util_execSystem("oal_wlan_ra_setWlanWdsCfg","iwpriv %s set ApCliKey2=%s",iVar2,auStack_f0);
+      util_execSystem("oal_wlan_ra_setWlanWdsCfg","iwpriv %s set ApCliKey3=%s",iVar2,auStack_f0);
+      util_execSystem("oal_wlan_ra_setWlanWdsCfg","iwpriv %s set ApCliKey4=%s",iVar2,auStack_f0);
+    }
+    if (iVar1 - 3U < 2) {
+      FUN_000a856c(auStack_f0,param_1 + 0xaf0);
+      util_execSystem("oal_wlan_ra_setWlanWdsCfg","iwpriv %s set ApCliWPAPSK=%s",iVar2,auStack_f0);
+    }
+    iVar1 = curMultimode();
+    if (iVar1 == 3) {
+      util_execSystem("oal_wlan_ra_setWlanWdsCfg","iwpriv %s set MACRepeaterEn=1",iVar2);
+      util_execSystem("oal_wlan_ra_setWlanWdsCfg","iwpriv %s set WscConfMode=1",iVar2);
+    }
+    FUN_000a856c(auStack_158,param_1 + 0xaab);
+    util_execSystem("oal_wlan_ra_setWlanWdsCfg","iwpriv %s set ApCliSsid=%s",iVar2,auStack_158);
+    util_execSystem("oal_wlan_ra_setWlanWdsCfg","iwpriv %s set ApCliEnable=%d",iVar2,1);
+  }
+  return 0;
+}
+--
+  
+  iVar1 = strcmp("Up",(char *)(param_1 + 0x468));
+  if (iVar1 == 0) {
+    util_execSystem("oal_wlan_ra_startWPSByPBC","iwpriv %s set WscConfMode=%d",param_1,7);
+    util_execSystem("oal_wlan_ra_startWPSByPBC","iwpriv %s set WscMode=%d",param_1,2);
+    util_execSystem("oal_wlan_ra_startWPSByPBC","iwpriv %s set WscGetConf=%d",param_1,1);
+  }
+  return 0;
+}
+--
+  int iVar1;
+  
+  iVar1 = param_2 + 1;
+  util_execSystem("oal_wlan_ra_setMSSIDAdvCfg","iwpriv %s set TxPower=%d",iVar1,
+                  *(undefined4 *)(param_1 + 0x830));
+  util_execSystem("oal_wlan_ra_setMSSIDAdvCfg","iwpriv %s set BeaconPeriod=%d",iVar1,
+                  *(undefined4 *)(param_1 + 0x838));
+  util_execSystem("oal_wlan_ra_setMSSIDAdvCfg","iwpriv %s set RTSThreshold=%d",iVar1,
+                  *(undefined4 *)(param_1 + 0x83c));
+  util_execSystem("oal_wlan_ra_setMSSIDAdvCfg","iwpriv %s set FragThreshold=%d",iVar1,
+                  *(undefined4 *)(param_1 + 0x840));
+  util_execSystem("oal_wlan_ra_setMSSIDAdvCfg","iwpriv %s set DtimPeriod=%d",iVar1,
+                  *(undefined4 *)(param_1 + 0x844));
+  util_execSystem("oal_wlan_ra_setMSSIDAdvCfg","iwpriv %s set HtGi=%d",iVar1,
+                  *(undefined *)(param_1 + 0x849));
+  util_execSystem("oal_wlan_ra_setMSSIDAdvCfg","iwpriv %s set WmmCapable=%d",iVar1,
+                  *(undefined *)(param_1 + 0x834));
+                    // WARNING: Treating indirect jump as call
+  util_execSystem("oal_wlan_ra_setMSSIDAdvCfg","iwpriv %s set NoForwarding=%d",iVar1,
+                  *(undefined *)(param_2 + 0x33));
+  return;
+}
+--
+void FUN_000ab9c4(int param_1)
+
+{
+  util_execSystem("oal_wlan_ra_setWlanAdvCfg","iwpriv %s set TxPower=%d",param_1,
+                  *(undefined4 *)(param_1 + 0x830));
+  util_execSystem("oal_wlan_ra_setWlanAdvCfg","iwpriv %s set BeaconPeriod=%d",param_1,
+                  *(undefined4 *)(param_1 + 0x838));
+  util_execSystem("oal_wlan_ra_setWlanAdvCfg","iwpriv %s set RTSThreshold=%d",param_1,
+                  *(undefined4 *)(param_1 + 0x83c));
+  util_execSystem("oal_wlan_ra_setWlanAdvCfg","iwpriv %s set FragThreshold=%d",param_1,
+                  *(undefined4 *)(param_1 + 0x840));
+  util_execSystem("oal_wlan_ra_setWlanAdvCfg","iwpriv %s set DtimPeriod=%d",param_1,
+                  *(undefined4 *)(param_1 + 0x844));
+  util_execSystem("oal_wlan_ra_setWlanAdvCfg","iwpriv %s set HtGi=%d",param_1,
+                  *(undefined *)(param_1 + 0x849));
+  util_execSystem("oal_wlan_ra_setWlanAdvCfg","iwpriv %s set HideSSID=%d",param_1,
+                  1 - (uint)*(byte *)(param_1 + 0x82c));
+  util_execSystem("oal_wlan_ra_setWlanAdvCfg","iwpriv %s set WmmCapable=%d",param_1,
+                  *(undefined *)(param_1 + 0x834));
+                    // WARNING: Treating indirect jump as call
+  util_execSystem("oal_wlan_ra_setWlanAdvCfg","iwpriv %s set NoForwarding=%d",param_1,
+                  *(undefined *)(param_1 + 0x848));
+  return;
+}
+--
+    if (((1 < local_18 - 1U) && (1 < local_14[0] - 6U)) && (local_14[0] != 9)) {
+      iVar2 = strcmp("2.4GHz",(char *)(param_1 + 1099));
+      if (iVar2 == 0) {
+        util_execSystem("oal_wlan_ra_startSecTools","killall -q  -SIGINT rt2860apd");
+        pcVar3 = "rt2860apd &";
+      }
+      else {
+        util_execSystem("oal_wlan_ra_startSecTools","killall -q  -SIGINT rtinicapd");
+        pcVar3 = "rtinicapd &";
+      }
+      util_execSystem("oal_wlan_ra_startSecTools",pcVar3);
+    }
+  }
+  else {
+--
+  local_68 = 0;
+  util_findSystemProc("wlNetlinkTool",0,auStack_58,"wlNetlinkTool",&local_68);
+  if (local_68 == 0) {
+    util_execSystem("oal_wlan_ra_initEnd","%s","wlNetlinkTool &");
+  }
+  else {
+    puts("wlNetlinkTool is already there. ");
+--
+        puts("DUT is Not Caled. Wireless Lan should not be used.");
+        iVar1 = strcmp("2.4GHz",pcVar3);
+        if (iVar1 == 0) {
+          util_execSystem("oal_wlan_ra_initEnd","iwpriv %s set SKUEnable=0",param_1);
+        }
+        local_68 = 0;
+        util_findSystemProc("ated_tp",0,0,0,&local_68);
+        if (local_68 == 0) {
+          util_execSystem("oal_wlan_ra_initEnd","%s","ated_tp &");
+        }
+        util_execSystem("oal_wlan_ra_initEnd","%s","echo 0 > /proc/tplink/led_wlan_24G");
+        util_execSystem("oal_wlan_ra_initEnd","%s","echo 0 > /proc/tplink/cal_status");
+        util_execSystem("oal_wlan_ra_initEnd","%s","echo 0 > /proc/tplink/led_wlan_5G");
+        return 0;
+      }
+      iVar1 = strcmp("2.4GHz",pcVar3);
+      if (iVar1 == 0) {
+        util_execSystem("oal_wlan_ra_initEnd","%s","killall -q wscd");
+        pcVar3 = "wscd -i %s -m 1 -w /var/tmp/wsc_upnp/ &";
+      }
+      else {
+        util_execSystem("oal_wlan_ra_initEnd","%s","killall -q wscd_5G");
+        pcVar3 = "wscd_5G -i %s -m 1 -w /var/tmp/wsc_upnp_5G/ &";
+      }
+      util_execSystem("oal_wlan_ra_initEnd",pcVar3,param_1);
+      iVar1 = FUN_000abb20(param_1);
+      if (iVar1 == 0) {
+        return 0;
+--
+    if ((iVar1 == 3) || (iVar1 = curMultimode(param_1), iVar1 == 2)) {
+      param_3 = getReMaxStaNum(param_1);
+    }
+    util_execSystem("oal_wlan_ra_setStaNum","iwpriv %s set MaxStaNum=%d",param_2,param_3);
+    return 0;
+  }
+  printf("MaxStaNum is %d, range(%d~%d)\n",param_3,0,0x40);
+--
+  if (iVar1 == 0) {
+    iVar2 = strcmp("2.4GHz",(char *)(param_1 + 1099));
+    if (iVar2 == 0) {
+      util_execSystem("oal_wlan_ra_loadDriver",
+                      "insmod /lib/modules/kmdir/kernel/drivers/net/wireless/mt_wifi_ap/mt_wifi.ko")
+      ;
+    }
+--
+     ) {
+    return 0;
+  }
+  util_execSystem("oal_wlan_ra_openVap","ifconfig %s up",param_2);
+  iVar1 = strcmp(param_2,param_1);
+  if (iVar1 == 0) {
+    iVar1 = strcmp("2.4GHz",param_1 + 1099);
+    if (iVar1 == 0) {
+      util_execSystem("oal_wlan_ra_openVap","%s","echo 1 > /proc/tplink/led_wlan_24G");
+      util_execSystem("oal_wlan_ra_openVap","%s","killall -q wscd");
+      pcVar2 = "wscd -i %s -m 1 -w /var/tmp/wsc_upnp/ &";
+    }
+    else {
+      util_execSystem("oal_wlan_ra_openVap","%s","echo 1 > /proc/tplink/led_wlan_5G");
+      util_execSystem("oal_wlan_ra_openVap","%s","killall -q wscd_5G");
+      pcVar2 = "wscd_5G -i %s -m 1 -w /var/tmp/wsc_upnp_5G/ &";
+    }
+    util_execSystem("oal_wlan_ra_openVap",pcVar2,param_2);
+    FUN_000abb20(param_1);
+  }
+  else {
+--
+  if (iVar1 == 0) {
+    iVar1 = curMultimode();
+    if (iVar1 == 3) {
+      util_execSystem("oal_wlan_ra_openVap","iwpriv %s set MACRepeaterEn=1",param_1);
+      util_execSystem("oal_wlan_ra_openVap","iwpriv %s set WscConfMode=1",param_1);
+    }
+    util_execSystem("oal_wlan_ra_openVap","iwpriv %s set ApCliEnable=1",param_1);
+  }
+  iVar1 = curMultimode();
+  if (iVar1 == 5) {
+--
+  if (iVar1 != 0) {
+    iVar3 = oal_tc_setQdiscForIntf(param_2,0,2,3);
+    if (iVar3 == 0) {
+      util_execSystem("oal_wlan_ra_closeVap","ifconfig %s down",param_2);
+      iVar1 = strcmp(param_2,param_1);
+      if (iVar1 == 0) {
+        iVar1 = strcmp("2.4GHz",param_1 + 1099);
+        if (iVar1 == 0) {
+          util_execSystem("oal_wlan_ra_closeVap","%s","echo 0 > /proc/tplink/led_wlan_24G");
+          util_execSystem("oal_wlan_ra_closeVap","%s","killall -q wscd");
+          pcVar2 = "killall -q  -SIGINT rt2860apd";
+        }
+        else {
+          util_execSystem("oal_wlan_ra_closeVap","%s","echo 0 > /proc/tplink/led_wlan_5G");
+          util_execSystem("oal_wlan_ra_closeVap","%s","killall -q wscd_5G");
+          pcVar2 = "killall -q  -SIGINT rtinicapd";
+        }
+        util_execSystem("oal_wlan_ra_closeVap","%s",pcVar2);
+      }
+      pcVar4 = cstr_strncpy;
+      pcVar2 = "Disabled";
+--
+  undefined auStack_78 [104];
+  
+  FUN_000a856c(auStack_78,param_1 + 0x11);
+  util_execSystem("oal_wlan_ra_setMSSIDBasicCfg","iwpriv %s set SSID=%s",param_1 + 1,auStack_78);
+  util_execSystem("oal_wlan_ra_setMSSIDBasicCfg","iwpriv %s set HideSSID=%d",param_1 + 1,
+                  1 - (uint)*(byte *)(param_1 + 0x32));
+  return;
+}
+--
+          iVar4 = strcmp("Up",__s2);
+          if (iVar4 == 0) {
+            FUN_000a856c(auStack_88,param_1 + 0xb59);
+            util_execSystem("oal_wlan_ra_updateWlanMssidEntryCfg","iwpriv %s set SSID=%s",iVar1,
+                            auStack_88);
+            util_execSystem("oal_wlan_ra_updateWlanMssidEntryCfg","ifconfig %s down",iVar1);
+            iVar4 = strcmp("5GHz",(char *)(param_1 + 1099));
+            if (iVar4 == 0) {
+              util_execSystem("oal_wlan_ra_updateWlanMssidEntryCfg","ifconfig %s down",param_1);
+              sleep(5);
+              util_execSystem("oal_wlan_ra_updateWlanMssidEntryCfg","ifconfig %s up",param_1);
+            }
+            util_execSystem("oal_wlan_ra_updateWlanMssidEntryCfg","ifconfig %s up",iVar1);
+          }
+          local_20 = FUN_000ac18c(param_1,iVar1,*(undefined4 *)(param_1 + 0xb88));
+          uVar3 = 0x117e;
+--
+          uVar3 = 7;
+        }
+        DAT_000efc94 = uVar2;
+        util_execSystem("oal_wlan_ra_setWlanWpsCfg","iwpriv %s set WscConfMode=%d",param_1,uVar3);
+      }
+    }
+    iVar1 = strcmp("Configured",(char *)(param_1 + 0x859));
+--
+    if (iVar1 != 0) {
+      uVar3 = 1;
+    }
+    util_execSystem("oal_wlan_ra_setWlanWpsCfg","iwpriv %s set WscConfStatus=%d",param_1,uVar3);
+    util_execSystem("oal_wlan_ra_setWlanWpsCfg","iwpriv %s set WscVendorPinCode=%08d",param_1,
+                    *(undefined4 *)(param_1 + 0x854));
+    util_execSystem("oal_wlan_ra_setWlanWpsCfg","iwpriv %s set WscSetupLock=%d",param_1,
+                    *(undefined *)(param_1 + 0x858));
+  }
+  iVar1 = FUN_000ad658(param_1);
+--
+    cdbg_perror("oal_wlan_ra_setWlanBasicCfg",0xa3e,1);
+    return 1;
+  }
+  util_execSystem("oal_wlan_ra_setWlanBasicCfg","iwpriv %s set CountryCode=%c%c_NOCOUNTRY",param_1,
+                  local_c4,local_c3);
+  iVar2 = FUN_000a82dc(param_1);
+  if (iVar2 != 0) {
+--
+      }
+    }
+  }
+  util_execSystem("oal_wlan_ra_setWlanBasicCfg","iwpriv %s set WirelessMode=%d",param_1,uVar3);
+  __s2 = (char *)(param_1 + 0x456);
+  iVar2 = strcmp("80M",__s2);
+  if ((iVar2 == 0) ||
+     ((iVar2 = strcmp("Auto",__s2), iVar2 == 0 && (iVar2 = strcmp("ac",pcVar4), iVar2 == 0)))) {
+    iVar2 = strcmp("5GHz",(char *)(param_1 + 1099));
+    if (iVar2 == 0) {
+      util_execSystem("oal_wlan_ra_setWlanBasicCfg","iwpriv %s set HtBw=%d",param_1,1);
+      util_execSystem("oal_wlan_ra_setWlanBasicCfg","iwpriv %s set HtBssCoex=%d",param_1,0);
+      uVar3 = 1;
+      goto LAB_000aeb50;
+    }
+  }
+  else {
+    iVar2 = strcmp("20M",__s2);
+    util_execSystem("oal_wlan_ra_setWlanBasicCfg","iwpriv %s set HtBw=%d",param_1,iVar2 != 0);
+    util_execSystem("oal_wlan_ra_setWlanBasicCfg","iwpriv %s set HtBssCoex=%d",param_1,0);
+    iVar2 = strcmp("5GHz",(char *)(param_1 + 1099));
+    if (iVar2 == 0) {
+      uVar3 = 0;
+LAB_000aeb50:
+      util_execSystem("oal_wlan_ra_setWlanBasicCfg","iwpriv %s set VhtBw=%d",param_1,uVar3);
+    }
+  }
+  if (*(char *)(param_1 + 0x28) == '\0') {
+    util_execSystem("oal_wlan_ra_setWlanBasicCfg","iwpriv %s set Channel=%d",param_1,
+                    *(undefined4 *)(param_1 + 0x24));
+    iVar2 = strcmp("2.4GHz",(char *)(param_1 + 1099));
+    if (iVar2 == 0) {
+--
+    }
+  }
+  else {
+    util_execSystem("oal_wlan_ra_setWlanBasicCfg","iwpriv %s set AutoChannelSel=%d",param_1,2);
+    pcVar4 = "iwpriv %s set Channel=%d";
+LAB_000aecbc:
+    uVar3 = 0;
+  }
+  util_execSystem("oal_wlan_ra_setWlanBasicCfg",pcVar4,param_1,uVar3);
+LAB_000aecdc:
+  iVar2 = strcmp("5GHz",(char *)(param_1 + 1099));
+  if (iVar2 == 0) {
+    util_execSystem("oal_wlan_ra_setWlanBasicCfg","iwpriv %s set VhtStbc=%d",param_1,0);
+    util_execSystem("oal_wlan_ra_setWlanBasicCfg","iwpriv %s set HtStbc=%d",param_1,0);
+  }
+  FUN_000a856c(auStack_94,param_1 + 0x429);
+  util_execSystem("oal_wlan_ra_setWlanBasicCfg","iwpriv %s set SSID=%s",param_1,auStack_94);
+  return 0;
+}
+
+--
+        }
+        iVar1 = strcmp("Up",__s2);
+        if (iVar1 == 0) {
+          util_execSystem("oal_wlan_ra_updateWlanCfg","iwpriv %s set AccessPolicy=%d",param_1,cVar4)
+          ;
+        }
+        __s2_00 = (char *)(param_1 + 0xb49);
+        iVar1 = strcmp((char *)(param_1 + 0xf55),__s2_00);
+        if ((iVar1 != 0) && (iVar1 = strcmp("Up",(char *)(param_1 + 0xb7c)), iVar1 == 0)) {
+          util_execSystem("oal_wlan_ra_updateWlanCfg","iwpriv %s set AccessPolicy=%d",__s2_00,cVar4)
+          ;
+        }
+        iVar1 = FUN_000a9314(param_1);
+--
+          iVar1 = strcmp("Up",__s2);
+          if (iVar1 == 0) {
+            FUN_000a856c(auStack_90,param_1 + 0x429);
+            util_execSystem("oal_wlan_ra_updateWlanCfg","iwpriv %s set SSID=%s",param_1,auStack_90);
+            if (*(char *)(param_1 + 0xf81) != 'C') {
+              util_execSystem("oal_wlan_ra_updateWlanCfg","ifconfig %s down",__s2_00);
+              sprintf(acStack_d0,"ifconfig %s down; ",param_1);
+              sprintf(acStack_110,"ifconfig %s up; ",param_1);
+              iVar1 = curMultimode();
+--
+                  sprintf(acStack_110 + sVar2,"ifconfig %s up","apclii0");
+                }
+              }
+              util_execSystem("oal_wlan_ra_updateWlanCfg",acStack_d0);
+              iVar1 = strcmp("5GHz",(char *)(param_1 + 1099));
+              if (iVar1 == 0) {
+                sleep(5);
+              }
+              util_execSystem("oal_wlan_ra_updateWlanCfg",acStack_110);
+            }
+          }
+          iVar1 = strcmp("Up",__s2);
+--
+          iVar1 = strcmp("Up",__s2_01);
+          if (iVar1 == 0) {
+            FUN_000a856c(auStack_90,param_1 + 0xb59);
+            util_execSystem("oal_wlan_ra_initMSSID","iwpriv %s set SSID=%s",__s2_00,auStack_90);
+          }
+          iVar1 = strcmp("Up",__s2_01);
+          if ((iVar1 != 0) ||
+--
+                  iVar1 = strcmp("Up",__s2);
+                  if (iVar1 == 0) {
+                    FUN_000a856c(auStack_90,param_1 + 0x429);
+                    util_execSystem("oal_wlan_ra_initWlan","iwpriv %s set SSID=%s",param_1,
+                                    auStack_90);
+                  }
+                  iVar1 = FUN_000a9314(param_1);
+                  if (iVar1 == 0) {
+                    util_execSystem("oal_wlan_ra_initWlan","ifconfig %s up",param_1);
+                    iVar1 = strcmp("2.4GHz",pcVar4);
+                    if (iVar1 == 0) {
+                      pcVar4 = "echo 1 > /proc/tplink/led_wlan_24G";
+--
+                    else {
+                      pcVar4 = "echo 1 > /proc/tplink/led_wlan_5G";
+                    }
+                    util_execSystem("oal_wlan_ra_initWlan","%s",pcVar4);
+                    util_execSystem("oal_wlan_ra_initWlan","iwpriv %s set ed_chk=0",param_1);
+                    iVar1 = strcmp("Up",__s2);
+                    if (iVar1 == 0) {
+                      return 0;
+--
+    memcpy(auStack_38,"IP_INPUT_GUEST_5G",0x12);
+    memcpy(auStack_58,"EB_FORWARD_GUEST_5G",0x14);
+  }
+  util_execSystem("oal_guest_initAccessControl",
+                  "ebtables -t broute -I BROUTING -i %s -j mark --or-mark 0x%x --mark-target CONTINUE"
+                  ,param_1,param_2);
+  util_execSystem("oal_guest_initAccessControl","iptables -N %s",auStack_38);
+  util_execSystem("oal_guest_initAccessControl","ebtables -N %s",auStack_58);
+  util_execSystem("oal_guest_initAccessControl","iptables -I INPUT -m mark --mark 0x%x/0x%x -j %s ",
+                  param_2,param_2,auStack_38);
+  util_execSystem("oal_guest_initAccessControl","ebtables -I FORWARD -i %s -j %s",param_1,auStack_58
+                 );
+  util_execSystem("oal_guest_initAccessControl","iptables -I %s -j DROP ",auStack_38);
+  util_execSystem("oal_guest_initAccessControl","iptables -I %s -p udp --dport 53 -j ACCEPT",
+                  auStack_38);
+  util_execSystem("oal_guest_initAccessControl","iptables -I %s -p udp --dport 67 -j ACCEPT",
+                  auStack_38);
+  util_execSystem("oal_guest_initAccessControl","ebtables -I %s -j DROP",auStack_58);
+  util_execSystem("oal_guest_initAccessControl","iwpriv %s set NoForwardingBTNBSSID=1",param_1);
+  return 0;
+}
+
+--
+    uVar2 = 0x800000;
+    memcpy(auStack_58,"EB_FORWARD_GUEST_5G",0x14);
+  }
+  util_execSystem("oal_guest_exitAccessControl",
+                  "ebtables -t broute -D BROUTING -i %s -j mark --or-mark 0x%x --mark-target CONTINUE"
+                  ,param_1,uVar2);
+  util_execSystem("oal_guest_exitAccessControl","iptables -D INPUT -m mark --mark 0x%x/0x%x -j %s ",
+                  uVar2,uVar2,auStack_38);
+  util_execSystem("oal_guest_exitAccessControl","ebtables -D FORWARD -i %s -j %s",param_1,auStack_58
+                 );
+  util_execSystem("oal_guest_exitAccessControl","ebtables -F %s",auStack_58);
+  util_execSystem("oal_guest_exitAccessControl","iptables -F %s",auStack_38);
+  util_execSystem("oal_guest_exitAccessControl","iptables -X %s",auStack_38);
+  util_execSystem("oal_guest_exitAccessControl","ebtables -X %s",auStack_58);
+  util_execSystem("oal_guest_exitAccessControl","iwpriv %s set NoForwardingBTNBSSID=0",param_1);
+  return 0;
+}
+
+--
+    memcpy(auStack_30,"EB_FORWARD_GUEST_5G",0x14);
+  }
+  if (param_1 == '\x01') {
+    util_execSystem();
+    util_execSystem("oal_guest_enableLanAccess","ebtables -I %s -j ACCEPT",auStack_30);
+    pcVar2 = "iwpriv %s set NoForwardingBTNBSSID=0";
+  }
+  else {
+    util_execSystem("oal_guest_enableLanAccess","ebtables -D %s -j ACCEPT",auStack_30);
+    pcVar2 = "iwpriv %s set NoForwardingBTNBSSID=1";
+  }
+  util_execSystem("oal_guest_enableLanAccess",pcVar2,param_3);
+  return 0;
+}
+
+--
+    memcpy(auStack_30,"IP_INPUT_GUEST_5G",0x12);
+  }
+  if (param_1 == '\x01') {
+    util_execSystem("oal_guest_enableUSBAccess","iptables -I %s -p tcp --dport 445 -j ACCEPT",
+                    auStack_30);
+    util_execSystem("oal_guest_enableUSBAccess","iptables -I %s -p tcp --dport 139 -j ACCEPT",
+                    auStack_30);
+    util_execSystem("oal_guest_enableUSBAccess","iptables -I %s -p udp --dport 138 -j ACCEPT",
+                    auStack_30);
+    pcVar2 = "iptables -I %s -p udp --dport 137 -j ACCEPT";
+  }
+  else {
+    util_execSystem("oal_guest_enableUSBAccess","iptables -D %s -p tcp --dport 445 -j ACCEPT",
+                    auStack_30);
+    util_execSystem("oal_guest_enableUSBAccess","iptables -D %s -p tcp --dport 139 -j ACCEPT",
+                    auStack_30);
+    util_execSystem("oal_guest_enableUSBAccess","iptables -D %s -p udp --dport 138 -j ACCEPT",
+                    auStack_30);
+    pcVar2 = "iptables -D %s -p udp --dport 137 -j ACCEPT";
+  }
+  util_execSystem("oal_guest_enableUSBAccess",pcVar2,auStack_30);
+  return 0;
+}
+
+--
+undefined4 oal_br_addBridge(undefined4 param_1)
+
+{
+  util_execSystem("oal_br_addBridge","brctl addbr %s;brctl setfd %s 0;brctl stp %s off",param_1,
+                  param_1,param_1,param_1);
+  oal_fw_ebtables(param_1,0);
+  oal_ipt_addLanRules(param_1);
+--
+{
+  char *pcVar1;
+  
+  util_execSystem("oal_br_delBridge","ifconfig %s down;brctl delbr %s",param_1,param_1);
+  oal_fw_ebtables(param_1,1);
+  pcVar1 = strchr(param_1,0x3a);
+  if (pcVar1 == (char *)0x0) {
+--
+undefined4 oal_br_addIntfIntoBridge(undefined4 param_1,undefined4 param_2)
+
+{
+  util_execSystem("oal_br_addIntfIntoBridge","brctl addif %s %s",param_2,param_1,&_gp_1);
+  return 0;
+}
+
+--
+undefined4 oal_br_delIntfFromBridge(undefined4 param_1,undefined4 param_2)
+
+{
+  util_execSystem("oal_br_delIntfFromBridge","brctl delif %s %s",param_2,param_1,&_gp_1);
+  return 0;
+}
+
+--
+
+{
+                    // WARNING: Treating indirect jump as call
+  util_execSystem("oal_br_markMulticastRouterPort",
+                  "echo 2 > /sys/devices/virtual/net/%s/brport/multicast_router",param_1);
+  return;
+}
+--
+  uint local_214;
+  
+  local_214 = param_2 & 0xff;
+  util_execSystem("oal_igmp_setForceVersion",
+                  "echo %d > /proc/sys/net/ipv4/conf/%s/force_igmp_version",local_214,param_1);
+  util_execSystem("oal_igmp_setForceVersion",
+                  "for i in /sys/devices/virtual/net/*/bridge/igmp_query_version; do echo %d > $i; done"
+                  ,3 - (uint)(local_214 != 0));
+  memset(auStack_2f8,0,0xe0);
+--
+  
+  bVar1 = *(char *)(param_2 + 2) == '\0';
+  if (bVar1) {
+    util_execSystem("oal_eth_setIGMPSnoopParam",
+                    "for i in /sys/devices/virtual/net/*/bridge/multicast_snooping;do echo 0 > $i ; done"
+                   );
+  }
+  else {
+    util_execSystem("oal_eth_setIGMPSnoopParam",
+                    "for i in /sys/devices/virtual/net/*/bridge/multicast_snooping;do echo 1 > $i ; done"
+                   );
+  }
+--
+  if ((*(uint *)(param_1 + 0x20) & 2) != 0) {
+    iVar2 = param_1;
+  }
+  util_execSystem("tc_setSpecialWanItfQdisc","tc filter show dev %s >/var/tc_filters",iVar2);
+  if (param_2 == 2) {
+    iVar1 = stat("/var/tc_filters",&sStack_b0);
+    if ((iVar1 == 0) && (sStack_b0.st_blocks == 0)) {
+      return 0;
+    }
+    util_execSystem("tc_setSpecialWanItfQdisc","tc qdisc del dev %s root handle 10: prio",iVar2);
+  }
+  else {
+    if (param_2 != 1) {
+--
+    if ((iVar1 == 0) && (0 < sStack_b0.st_blocks)) {
+      return 0;
+    }
+    util_execSystem("tc_setSpecialWanItfQdisc","tc qdisc add dev %s root handle 10: prio",iVar2);
+    util_execSystem("tc_setSpecialWanItfQdisc",
+                    "tc filter add dev %s parent 10: protocol all prio 1 u32 match u32 0 0 flowid 10:1 action mirred egress redirect dev %s"
+                    ,iVar2,&DAT_000da3a4);
+  }
+--
+    if (*(char *)(param_1 + 0x10) != '\0') {
+      return 0;
+    }
+    util_execSystem("oal_tc_setSpecialLanItfQdisc","tc filter show dev %s >/var/tc_filters",param_1)
+    ;
+    iVar1 = stat("/var/tc_filters",&sStack_a8);
+    if ((iVar1 == 0) && (sStack_a8.st_blocks == 0)) {
+      return 0;
+    }
+    util_execSystem("oal_tc_setSpecialLanItfQdisc","tc qdisc del dev %s root handle 10: prio",
+                    param_1);
+  }
+  else {
+--
+    if (*(char *)(param_1 + 0x10) != '\0') {
+      return 0;
+    }
+    util_execSystem("oal_tc_setSpecialLanItfQdisc","tc filter show dev %s >/var/tc_filters",param_1)
+    ;
+    iVar1 = stat("/var/tc_filters",&sStack_140);
+    if ((iVar1 == 0) && (0 < sStack_140.st_blocks)) {
+      return 0;
+    }
+    util_execSystem("oal_tc_setSpecialLanItfQdisc","tc qdisc add dev %s root handle 10: prio",
+                    param_1);
+    util_execSystem("oal_tc_setSpecialLanItfQdisc",
+                    "tc filter add dev %s parent 10: protocol all prio 1 handle 0x%x fw mask 0x%x classid 10:1 action mirred egress redirect dev %s"
+                    ,param_1,0x8000,0x8000,&DAT_000da49c);
+  }
+--
+      if (param_5 != 2) {
+        uVar2 = 0x41;
+      }
+      util_execSystem("tc_setEbtablesMarkRuleForIntf",
+                      "ebtables -t broute -%c BROUTING -i %s -j mark --or-mark 0x%x",uVar2,param_1,
+                      param_2);
+      if (param_4 == 1) {
+--
+    }
+  }
+  else {
+    util_execSystem("tc_setMarkRuleBasedOnItf","iptables -%c %s -j MARK --or-mark 0x%x",local_20,
+                    auStack_5c,param_2);
+  }
+  return 0;
+--
+        else {
+          puVar5 = &DAT_000da49c;
+        }
+        util_execSystem("oal_tc_modifyQdiscOrClass","ifconfig %s up",puVar5);
+      }
+    }
+    util_execSystem("oal_tc_modifyQdiscOrClass","tc %s %s %s %s %s %s",&local_e8,&local_e0,&local_a8
+                    ,&local_b8,&local_c8,local_98);
+    uVar4 = 0;
+    if ((*(int *)(param_1 + 0x10) == 0) && (uVar4 = 0, *(int *)(param_1 + 0xc) == 2)) {
+--
+      else {
+        puVar5 = &DAT_000da49c;
+      }
+      util_execSystem("oal_tc_modifyQdiscOrClass","ifconfig %s down",puVar5);
+      util_execSystem("oal_tc_modifyQdiscOrClass","iptables -F %s",acStack_d8);
+      uVar4 = 0;
+    }
+  }
+--
+      pcVar4 = "operation(%d) is not supported!\n";
+      goto LAB_000b3610;
+    }
+    util_execSystem("oal_tc_modifyFilter","tc filter %s %s %s %s protocol all %s fw %s %s",&local_80
+                    ,&local_38,&local_48,&local_78,&local_68,&local_58,&local_28);
+    uVar2 = 0;
+  }
+--
+      sprintf(&local_8c,"--dport %d:%d",uVar1,(uint)param_6);
+    }
+    if ((param_7 == '\0') || (param_7 == '\x06')) {
+      util_execSystem("oal_tc_modifyRule","iptables %s %s %s -p tcp %s -j MARK --set-mark 0x%x",
+                      &local_90,"FWD_MARK_LAN",&local_6c,&local_8c,uVar2);
+      util_execSystem("oal_tc_modifyRule","iptables %s %s %s -p tcp %s -j RETURN",&local_90,
+                      "FWD_MARK_LAN",&local_6c,&local_8c);
+      if (param_7 != '\0') goto LAB_000b38a4;
+    }
+--
+LAB_000b38a4:
+      if (param_7 != '\x11') goto LAB_000b3918;
+    }
+    util_execSystem("oal_tc_modifyRule","iptables %s %s %s -p udp %s -j MARK --set-mark 0x%x",
+                    &local_90,"FWD_MARK_LAN",&local_6c,&local_8c,uVar2);
+    util_execSystem("oal_tc_modifyRule","iptables %s %s %s -p udp %s -j RETURN",&local_90,
+                    "FWD_MARK_LAN",&local_6c,&local_8c);
+  }
+LAB_000b3918:
+--
+    sprintf(&local_8c,"--sport %d:%d",uVar1,(uint)param_6);
+  }
+  if ((param_7 == '\0') || (param_7 == '\x06')) {
+    util_execSystem("oal_tc_modifyRule","iptables %s %s %s -p tcp %s -j MARK --set-mark 0x%x",
+                    &local_90,"FWD_MARK_WAN",&local_6c,&local_8c,uVar2 | 0x8000);
+    util_execSystem("oal_tc_modifyRule","iptables %s %s %s -p tcp %s -j RETURN",&local_90,
+                    "FWD_MARK_WAN",&local_6c,&local_8c);
+    if (param_7 == '\0') goto LAB_000b3a3c;
+  }
+--
+    return 0;
+  }
+LAB_000b3a3c:
+  util_execSystem("oal_tc_modifyRule","iptables %s %s %s -p udp %s -j MARK --set-mark 0x%x",
+                  &local_90,"FWD_MARK_WAN",&local_6c,&local_8c,uVar2 | 0x8000);
+  util_execSystem("oal_tc_modifyRule","iptables %s %s %s -p udp %s -j RETURN",&local_90,
+                  "FWD_MARK_WAN",&local_6c,&local_8c);
+  return 0;
+}
+--
+  }
+  local_26 = 0;
+  if ((param_2 & 2) != 0) {
+    util_execSystem("oal_tc_modifyIfnameRule","iptables %s %s -m mark --mark 0x%x/0x%x -j RETURN",
+                    &local_28,"FWD_MARK_LAN",param_4,param_4);
+    util_execSystem("oal_tc_modifyIfnameRule",
+                    "iptables %s %s -m mark --mark 0x%x/0x%x -j MARK --or-mark 0x%x",&local_28,
+                    "FWD_MARK_LAN",param_4,param_4,(uint)param_6);
+  }
+  if ((param_2 & 1) != 0) {
+    util_execSystem("oal_tc_modifyIfnameRule",
+                    "ebtables %s OUTPUT -o %s -j mark --or-mark 0x%x --mark-target CONTINUE",
+                    &local_28,param_3,param_6 | 0x8000);
+    util_execSystem("oal_tc_modifyIfnameRule",
+                    "ebtables %s OUTPUT -o %s -j mark --mark-and 0x%x --mark-target CONTINUE",
+                    &local_28,param_3,0xffffff00);
+  }
+--
+void oal_tc_enableTC(void)
+
+{
+  util_execSystem("oal_ipt_fwdMark","iptables -t filter -D FORWARD -o br+ -j FWD_MARK_WAN\n");
+  util_execSystem("oal_ipt_fwdMark","iptables -t filter -D FORWARD -i br+ -j FWD_MARK_LAN\n");
+  util_execSystem("oal_ipt_fwdMark","iptables -t filter -I FORWARD -o br+ -j FWD_MARK_WAN\n");
+                    // WARNING: Treating indirect jump as call
+  util_execSystem("oal_ipt_fwdMark","iptables -t filter -I FORWARD -i br+ -j FWD_MARK_LAN\n");
+  return;
+}
+
+--
+void oal_tc_disableTC(void)
+
+{
+  util_execSystem("oal_ipt_fwdMark","iptables -t filter -D FORWARD -o br+ -j FWD_MARK_WAN\n");
+  util_execSystem("oal_ipt_fwdMark","iptables -t filter -D FORWARD -i br+ -j FWD_MARK_LAN\n");
+  return;
+}
+
+--
+    fprintf(__stream,dhcp6sAddrCfg,param_1,param_6,acStack_150,acStack_178);
+  }
+  fclose(__stream);
+  util_execSystem("oal_lan6_startDhcp6s","dhcp6s -c %s -P %s %s &",acStack_e8,acStack_128,param_1);
+  return 0;
+}
+
+--
+    fscanf(__stream,"%d",&local_98);
+    fclose(__stream);
+    if (0 < local_98) {
+      util_execSystem("oal_lan6_stopDhcp6s","kill -9 %d");
+    }
+    util_execSystem("oal_lan6_stopDhcp6s","rm -f %s %s",acStack_54,acStack_94);
+    uVar1 = 0;
+  }
+  return uVar1;
+--
+    }
+    fprintf(__stream,radvdLastCfg);
+    fclose(__stream);
+    util_execSystem("oal_lan6_startRadvd","radvd -C %s -p %s &",acStack_d0,acStack_110);
+    uVar1 = 0;
+  }
+  return uVar1;
+--
+    fscanf(__stream,"%d",&local_98);
+    fclose(__stream);
+    if (0 < local_98) {
+      util_execSystem("oal_lan6_stopRadvd","kill -15 %d");
+    }
+    util_execSystem("oal_lan6_stopRadvd","rm -f %s %s",acStack_54,acStack_94);
+    uVar1 = 0;
+  }
+  return uVar1;
+--
+  else {
+    pcVar1 = "ifconfig %s del %s/%d";
+  }
+  util_execSystem("oal_lan6_setIntfAddr",pcVar1,param_1,param_2,param_3);
+  return 0;
+}
+
+--
+void oal_wan6_enableAcceptRa(undefined4 param_1)
+
+{
+  util_execSystem("oal_wan6_enableAcceptRa","echo 2 > /proc/sys/net/ipv6/conf/%s/accept_ra",param_1)
+  ;
+                    // WARNING: Treating indirect jump as call
+  util_execSystem("oal_wan6_enableAcceptRa","echo 0 > /proc/sys/net/ipv6/conf/%s/autoconf",param_1);
+  return;
+}
+
+--
+
+{
+                    // WARNING: Treating indirect jump as call
+  util_execSystem("oal_wan6_disableAcceptRa","echo 0 > /proc/sys/net/ipv6/conf/%s/accept_ra",param_1
+                 );
+  return;
+}
+--
+      fprintf(__stream,dhcp6cPDCfg,uVar5,&DAT_000c0a1c,pcVar4,pcVar3,pcVar1,pcVar2);
+    }
+    fclose(__stream);
+    util_execSystem("oal_wan6_startDhcp6c","dhcp6c -c %s -p %s %s %s &",acStack_a0,acStack_e0,
+                    param_1,param_2);
+  }
+  return;
+--
+    fscanf(__stream,"%d",&local_90);
+    fclose(__stream);
+    if (0 < local_90) {
+      util_execSystem("oal_wan6_stopDhcp6c","kill -s 15 %d");
+    }
+    util_execSystem("oal_wan6_stopDhcp6c","rm -f %s %s",acStack_4c,acStack_8c);
+  }
+  return;
+}
+--
+undefined4 oal_wan6_setIpAddr(undefined4 param_1,undefined4 param_2,undefined4 param_3)
+
+{
+  util_execSystem("oal_wan6_setIpAddr","ifconfig %s add %s/%d",param_2,param_1,param_3);
+  return 0;
+}
+
+--
+undefined4 oal_wan6_delIpAddr(undefined4 param_1,undefined4 param_2,undefined4 param_3)
+
+{
+  util_execSystem("oal_wan6_delIpAddr","ifconfig %s del %s/%d",param_2,param_1,param_3);
+  return 0;
+}
+
+--
+
+{
+                    // WARNING: Treating indirect jump as call
+  util_execSystem("oal_wan6_enableSlaac","echo 1 > /proc/sys/net/ipv6/conf/%s/autoconf",param_1);
+  return;
+}
+
+--
+{
+  int iVar1;
+  
+  util_execSystem("oal_setIp6DefaultRoute","route -A inet6 del default");
+  if (((*param_1 != '\0') && (*param_2 != '\0')) &&
+     (iVar1 = strcmp(param_2,(char *)&DAT_000c3ba8), iVar1 != 0)) {
+    util_execSystem("oal_setIp6DefaultRoute","route -A inet6 add default gw %s dev %s",param_2,
+                    param_1);
+    return 0;
+  }
+  util_execSystem("oal_setIp6DefaultRoute","echo 1 > /proc/sys/net/ipv6/conf/%s/sendrs ",param_1);
+  sleep(1);
+  return 0;
+}
+--
+oal_addIp6StaticRoute(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4)
+
+{
+  util_execSystem("oal_addIp6StaticRoute","route -A inet6 add %s/%d gw %s dev %s",param_1,param_2,
+                  param_3,param_4,&_gp_1);
+  return 0;
+}
+--
+undefined4 oal_delIp6StaticRoute(undefined4 param_1,undefined4 param_2)
+
+{
+  util_execSystem("oal_delIp6StaticRoute","route -A inet6 del %s/%d",param_1,param_2,&_gp_1);
+  return 0;
+}
+
+--
+      pcVar7 = "DROP";
+    }
+    sprintf(pcVar9,"-j %s",pcVar7);
+    util_execSystem("setRule",acStack_238);
+    uVar12 = uVar12 + 1;
+    if ((*(char *)(param_1 + 0x15) != '\x03') || (2 < (int)uVar12)) {
+      return 0;
+--
+{
+  char *pcVar1;
+  
+  util_execSystem("oal_fw6_setDefaultAction","ip6tables -D FIREWALL -j DROP");
+  util_execSystem("oal_fw6_setDefaultAction","ip6tables -D FIREWALL -j ACCEPT");
+  if (param_1 == '\0') {
+    pcVar1 = "ip6tables -A FIREWALL -j ACCEPT";
+  }
+  else {
+    pcVar1 = "ip6tables -A FIREWALL -j DROP";
+  }
+  util_execSystem("oal_fw6_setDefaultAction",pcVar1);
+  return 0;
+}
+
+--
+void oal_initIp6FirewallObj(void)
+
+{
+  util_execSystem("oal_initIp6FirewallObj","ip6tables -F");
+  util_execSystem("oal_initIp6FirewallObj","ip6tables -X");
+  util_execSystem("oal_initIp6FirewallObj","ip6tables -P INPUT ACCEPT");
+  util_execSystem("oal_initIp6FirewallObj","ip6tables -P FORWARD DROP");
+  util_execSystem("oal_initIp6FirewallObj","ip6tables -P OUTPUT ACCEPT");
+  util_execSystem("oal_initIp6FirewallObj","ip6tables -N FIREWALL");
+  util_execSystem("oal_initIp6FirewallObj","ip6tables -N FWRULE");
+  util_execSystem("oal_initIp6FirewallObj","ip6tables -N SETMSS");
+  util_execSystem("oal_initIp6FirewallObj",
+                  "ip6tables -A INPUT -i lo -p ALL -j ACCEPT -m comment \t\t\t\t\t--comment \"loop back\""
+                 );
+  util_execSystem("oal_initIp6FirewallObj",
+                  "ip6tables -A INPUT  -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT");
+  util_execSystem("oal_initIp6FirewallObj","ip6tables -A INPUT -i br+ -p tcp --dport 23 -j ACCEPT");
+  util_execSystem("oal_initIp6FirewallObj","ip6tables -A INPUT -p tcp --dport 23 -j DROP");
+  util_execSystem("oal_initIp6FirewallObj","ip6tables -A INPUT -i br+ -p tcp --dport 22 -j ACCEPT");
+  util_execSystem("oal_initIp6FirewallObj","ip6tables -A INPUT -p tcp --dport 22 -j DROP");
+  util_execSystem("oal_initIp6FirewallObj",
+                  "ip6tables -A INPUT -i br+ -p icmpv6 --icmpv6-type echo-request -j ACCEPT");
+  util_execSystem("oal_initIp6FirewallObj",
+                  "ip6tables -A INPUT -p icmpv6 --icmpv6-type echo-request -j DROP");
+  util_execSystem("oal_initIp6FirewallObj",
+                  "ip6tables -A FORWARD -i br+ -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT"
+                 );
+  util_execSystem("oal_initIp6FirewallObj",
+                  "ip6tables -A FORWARD -o br+ -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT"
+                 );
+  util_execSystem("oal_initIp6FirewallObj","ip6tables -A FORWARD -j FIREWALL");
+                    // WARNING: Treating indirect jump as call
+  util_execSystem("oal_initIp6FirewallObj","ip6tables -I FORWARD 1 -j SETMSS");
+  return;
+}
+
+--
+{
+  char *pcVar1;
+  
+  util_execSystem("oal_fw6_setFwEnabeld","ip6tables -D FIREWALL -j ACCEPT");
+  if (param_1 == '\0') {
+    util_execSystem("oal_fw6_setFwEnabeld","ip6tables -F FIREWALL");
+    pcVar1 = "ip6tables -A FIREWALL -j ACCEPT";
+  }
+  else {
+    pcVar1 = "ip6tables -I FIREWALL 1 -j FWRULE";
+  }
+  util_execSystem("oal_fw6_setFwEnabeld",pcVar1);
+  return 0;
+}
+
+--
+{
+  char acStack_410 [1024];
+  
+  util_execSystem("oal_fw6_setIp6TcpMss","ip6tables -F SETMSS");
+  sprintf(acStack_410,
+          "ip6tables -A SETMSS -i %s -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --set-mss %d",param_1,
+          param_2 + -0x3c);
+  util_execSystem("oal_fw6_setIp6TcpMss",acStack_410);
+  sprintf(acStack_410,
+          "ip6tables -A SETMSS -o %s -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --set-mss %d",param_1,
+          param_2 + -0x3c);
+  util_execSystem("oal_fw6_setIp6TcpMss",acStack_410);
+  return 0;
+}
+
+--
+oal_fw6_delIp6TcpMss(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4)
+
+{
+  util_execSystem("oal_fw6_delIp6TcpMss","ip6tables -F SETMSS",param_3,param_4,&_gp_1);
+  return 0;
+}
+
+--
+undefined4 oal_dslite_addTunnel(undefined4 param_1,undefined4 param_2)
+
+{
+  util_execSystem("oal_dslite_addTunnel","ip -6 tunnel add dslite mode ip4ip6 remote %s local %s",
+                  param_1,param_2);
+  util_execSystem("oal_dslite_addTunnel","ifconfig dslite up");
+  return 0;
+}
+
+--
+oal_dslite_delTunnel(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4)
+
+{
+  util_execSystem("oal_dslite_delTunnel","ip -6 tunnel del dslite",param_3,param_4,&_gp_1);
+  return 0;
+}
+
+--
+undefined4 oal_dslite_setRoute(undefined4 param_1,char param_2)
+
+{
+  util_execSystem("oal_dslite_setRoute","route del default");
+  if (param_2 != '\0') {
+    util_execSystem("oal_dslite_setRoute","route add default dev %s",param_1);
+  }
+  return 0;
+}
+--
+                 undefined4 param_5)
+
+{
+  util_execSystem("oal_6rd_addTunnel","ip tunnel add 6rd mode sit local %s ttl 64",param_4);
+  util_execSystem("oal_6rd_addTunnel",
+                  "ip tunnel 6rd dev 6rd 6rd-prefix %s/%d 6rd-relay_prefix %s/%d",param_1,param_2,
+                  param_3,param_5);
+  util_execSystem("oal_6rd_addTunnel","ifconfig 6rd up");
+  return 0;
+}
+
+--
+oal_6rd_delTunnel(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4)
+
+{
+  util_execSystem("oal_6rd_delTunnel","ip tunnel del 6rd",param_3,param_4,&_gp_1);
+  return 0;
+}
+
+--
+                char param_5)
+
+{
+  util_execSystem("oal_6rd_setRoute","route -A inet6 del default");
+  if (param_5 != '\0') {
+    util_execSystem("oal_6rd_setRoute","route -A inet6 add default gw ::%s dev %s",param_2,param_1);
+    util_execSystem("oal_6rd_setRoute","route -A inet6 add %s/%d dev %s",param_3,param_4,param_1);
+  }
+  return 0;
+}
+--
+undefined4 oal_6to4_addTunnel(undefined4 param_1)
+
+{
+  util_execSystem("oal_6to4_addTunnel","ip tunnel add 6to4 mode sit remote any local %s",param_1);
+  util_execSystem("oal_6to4_addTunnel","ifconfig 6to4 up");
+  return 0;
+}
+
+--
+oal_6to4_delTunnel(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4)
+
+{
+  util_execSystem("oal_6to4_delTunnel","ip tunnel del 6to4",param_3,param_4,&_gp_1);
+  return 0;
+}
+
+--
+void oal_6to4_setRoute(undefined4 param_1,char param_2)
+
+{
+  util_execSystem("oal_6to4_setRoute","route -A inet6 del default");
+  if (param_2 != '\0') {
+                    // WARNING: Treating indirect jump as call
+    util_execSystem("oal_6to4_setRoute","route -A inet6 add default gw ::192.88.99.1 dev %s",param_1
+                   );
+    return;
+  }
+--
+undefined4 oal_6to4_setIpAddr(undefined4 param_1,undefined4 param_2)
+
+{
+  util_execSystem("oal_6to4_setIpAddr","ifconfig %s add %s",param_2,param_1,&_gp_1);
+  return 0;
+}
+
+--
+  strcpy((char *)&local_474,"l2tp");
+  iVar1 = util_findSystemProc(&DAT_000d30cc,0,auStack_42c,&local_474,&local_478);
+  if ((iVar1 != 0) && (local_478 != 0)) {
+    util_execSystem("oal_wan_initPPPoL2TP","kill -9 %d");
+    iVar1 = 10;
+    oal_util_sleep(1);
+    do {
+      iVar2 = util_findSystemProc(&DAT_000d30cc,0,auStack_42c,&local_474,&local_478);
+      if (iVar2 == 0) break;
+      util_execSystem("oal_wan_initPPPoL2TP","kill -9 %d",local_478);
+      iVar1 = iVar1 + -1;
+      oal_util_sleep(1);
+    } while (iVar1 != 0);
+--
+  strcpy((char *)&local_474,"l2tp");
+  iVar1 = util_findSystemProc("xl2tpd",0,auStack_42c,&local_474,&local_478);
+  if ((iVar1 != 0) && (local_478 != 0)) {
+    util_execSystem("oal_wan_initPPPoL2TP","kill -9 %d");
+    iVar1 = 10;
+    oal_util_sleep(1);
+    do {
+      iVar2 = util_findSystemProc("xl2tpd",0,auStack_42c,&local_474,&local_478);
+      if (iVar2 == 0) break;
+      util_execSystem("oal_wan_initPPPoL2TP","kill -9 %d",local_478);
+      iVar1 = iVar1 + -1;
+      oal_util_sleep(1);
+    } while (iVar1 != 0);
+--
+      }
+      util_execSystem_long("oal_wan_initPPPoL2TP",auStack_42c);
+      oal_intf_waitIntfExists(param_1 + 0x488);
+      util_execSystem("oal_wan_initPPPoL2TP","echo \'c TP_L2TP\' > /var/run/l2tp-control");
+      return 0;
+    }
+    cdbg_printf(8,"oal_wan_initPPPoL2TP",0x118,"Fail to write configure file of L2TP!");
+--
+            sVar2 = strlen(__s);
+            iVar1 = atoi((char *)(param_1 + sVar2 + 0x1df));
+            iVar1 = iVar1 * 0x12 + 2;
+            util_execSystem("oal_wan_setL2tpFakeIp","ifconfig %s %s%d",__s,"169.254.113.",iVar1);
+            util_execSystem("oal_wan_setL2tpFakeIp","route add default gw %s%d dev %s",
+                            "169.254.113.",iVar1,__s);
+          }
+          else {
+            util_execSystem("oal_wan_setL2tpFakeIp","ifconfig %s %s",__s,param_1 + 0x159);
+            util_execSystem("oal_wan_setL2tpFakeIp","route add default gw %s dev %s",param_1 + 0x189
+                            ,__s);
+          }
+        }
+--
+    iVar1 = util_findSystemProc(&DAT_000d30cc,0,auStack_40c,&local_414,&local_418);
+    uVar2 = 0;
+    if (iVar1 != 0) {
+      util_execSystem("oal_wan_stopL2tpPpp","kill %d",local_418);
+    }
+  }
+  return uVar2;
+--
+    (*pcVar3)(10);
+  }
+  else {
+    util_execSystem("oal_wan_stopXl2tpd","kill %d",local_418);
+  }
+  return 0;
+}
+--
+  strcpy((char *)&local_434,"l2tp");
+  iVar1 = util_findSystemProc(&DAT_000d30cc,0,auStack_42c,&local_434,&local_438);
+  if ((iVar1 != 0) && (local_438 != 0)) {
+    util_execSystem("oal_wan_StopL2tpPppWait","kill %d");
+    iVar1 = 10;
+    oal_util_sleep(1);
+    do {
+      iVar2 = util_findSystemProc(&DAT_000d30cc,0,auStack_42c,&local_434,&local_438);
+      if (iVar2 == 0) break;
+      util_execSystem("oal_wan_StopL2tpPppWait","kill %d",local_438);
+      iVar1 = iVar1 + -1;
+      oal_util_sleep(1);
+    } while (iVar1 != 0);
+--
+  strcpy((char *)&local_434,"l2tp");
+  iVar1 = util_findSystemProc("xl2tpd",0,auStack_42c,&local_434,&local_438);
+  if (iVar1 != 0) {
+    util_execSystem("oal_wan_StopL2tpPppWait","echo \'d TP_L2TP\' > /var/run/l2tp-control");
+  }
+  strcpy((char *)&local_434,"l2tp");
+  iVar1 = util_findSystemProc("xl2tpd",0,auStack_42c,&local_434,&local_438);
+  if ((iVar1 != 0) && (local_438 != 0)) {
+    util_execSystem("oal_wan_StopL2tpPppWait","kill -9 %d");
+    iVar1 = 10;
+    oal_util_sleep(1);
+    do {
+--
+      if (iVar2 == 0) {
+        return 0;
+      }
+      util_execSystem("oal_wan_StopL2tpPppWait","kill -9 %d",local_438);
+      iVar1 = iVar1 + -1;
+      oal_util_sleep(1);
+    } while (iVar1 != 0);
+--
+  if (iVar1 == 0) {
+    util_execSystem_long("oal_wan_startPPPoL2TP",auStack_410);
+    oal_intf_waitIntfExists(param_1 + 0x488);
+    util_execSystem("oal_wan_startPPPoL2TP","echo \'c TP_L2TP\' > /var/run/l2tp-control");
+  }
+  else {
+    cdbg_printf(8,"oal_wan_startPPPoL2TP",0x24c,auStack_410);
+--
+  iVar1 = util_findSystemProc(&DAT_000d30cc,0,auStack_22c,&local_234,&local_238);
+  if (iVar1 != 0) {
+    if (local_238 != 0) {
+      util_execSystem("oal_wan_initPPPoPPTP","kill -9 %d");
+      iVar1 = 10;
+      oal_util_sleep(1);
+      do {
+        iVar2 = util_findSystemProc(&DAT_000d30cc,0,auStack_22c,&local_234,&local_238);
+        if (iVar2 == 0) break;
+        util_execSystem("oal_wan_initPPPoPPTP","kill -9 %d",local_238);
+        iVar1 = iVar1 + -1;
+        oal_util_sleep(1);
+      } while (iVar1 != 0);
+    }
+  }
+  util_execSystem("oal_wan_initPPPoPPTP","insmod /lib/modules/pptp.ko");
+  memset(auStack_22c,0,0x200);
+  iVar1 = FUN_000b79a0(param_1,auStack_22c);
+  if (iVar1 == 0) {
+    util_execSystem("oal_wan_initPPPoPPTP",auStack_22c);
+    oal_intf_waitIntfExists(param_1 + 0x488);
+  }
+  else {
+--
+            sVar2 = strlen(__s);
+            iVar1 = atoi((char *)(param_1 + sVar2 + 0x1df));
+            iVar1 = iVar1 * 0x12 + 2;
+            util_execSystem("oal_wan_setPptpFakeIp","ifconfig %s %s%d",__s,"169.254.113.",iVar1);
+            util_execSystem("oal_wan_setPptpFakeIp","route add default gw %s%d dev %s",
+                            "169.254.113.",iVar1,__s);
+          }
+          else {
+            util_execSystem("oal_wan_setPptpFakeIp","ifconfig %s %s",__s,param_1 + 0x159);
+            util_execSystem("oal_wan_setPptpFakeIp","route add default gw %s dev %s",param_1 + 0x189
+                            ,__s);
+          }
+        }
+--
+  strcpy((char *)&local_214,"pptp");
+  iVar1 = util_findSystemProc(&DAT_000d30cc,0,auStack_20c,&local_214,&local_218);
+  if (iVar1 != 0) {
+    util_execSystem("oal_wan_stopPptpPpp","kill %d",local_218);
+  }
+  return 0;
+}
+--
+  if (iVar1 != 0) {
+    iVar1 = util_findSystemProc_pptp(&DAT_000d30cc,local_22c,auStack_220,&local_228,&local_230);
+    if (iVar1 == 0) {
+      util_execSystem("oal_wan_StopPptpPppWait","kill -SIGTERM %d",local_22c);
+    }
+    else if ((local_22c != 0) && (local_230 != 0)) {
+      util_execSystem("oal_wan_StopPptpPppWait","kill %d %d");
+      iVar1 = 10;
+      oal_util_sleep(1);
+      do {
+--
+        if (iVar2 == 0) {
+          return 0;
+        }
+        util_execSystem("oal_wan_StopPptpPppWait","kill %d",local_22c);
+        iVar1 = iVar1 + -1;
+        oal_util_sleep(1);
+      } while (iVar1 != 0);
+--
+  undefined auStack_210 [512];
+  
+  memset(auStack_210,0,0x200);
+  util_execSystem("oal_wan_startPPPoPPTP","insmod /lib/modules/pptp.ko");
+  memset(auStack_210,0,0x200);
+  iVar1 = FUN_000b79a0(param_1,auStack_210);
+  if (iVar1 == 0) {
+    util_execSystem("oal_wan_startPPPoPPTP",auStack_210);
+    oal_intf_waitIntfExists(param_1 + 0x488);
+  }
+  else {
+--
+LAB_000b8b30:
+  sVar2 = strlen(acStack_414);
+  snprintf(acStack_414 + sVar2,0x400 - sVar2," &");
+  util_execSystem("oal_startPing",acStack_414);
+  return 0;
+}
+
+--
+    snprintf(acStack_414 + sVar2,0x400 - sVar2,"traceroute -m %d -q %d -w %d %s %d &",
+             *(undefined4 *)(param_1 + 0x28),*(undefined4 *)(param_1 + 0x38),
+             *(undefined4 *)(param_1 + 0x34),param_1 + 0x100,*(undefined4 *)(param_1 + 0x30));
+    util_execSystem("oal_startTraceRoute",acStack_414);
+    uVar3 = 0;
+  }
+  else {
+--
+  sprintf(acStack_28,"%s.%d",&DAT_000c0a54,param_1);
+  iVar1 = oal_intf_ifExist(acStack_28);
+  if (iVar1 == 0) {
+    util_execSystem("oal_addVlanTagIntf","vconfig add %s %d",&DAT_000c0a54,param_1);
+    if (param_2 != 0) {
+      util_execSystem("oal_addVlanTagIntf","vconfig set_flag %s 1 1",acStack_28);
+      util_execSystem("oal_addVlanTagIntf","vconfig set_egress_map %s 0 %d",acStack_28,param_2);
+    }
+    oal_intf_enableIntf(acStack_28);
+    oal_intf_waitIntfExists(acStack_28);
+--
+  iVar1 = oal_intf_ifExist(acStack_20);
+  if (iVar1 == 1) {
+    oal_intf_disableIntf(acStack_20);
+    util_execSystem("oal_delVlanTagIntf","vconfig rem %s.%d",&DAT_000c0a54,param_1);
+  }
+  return 0;
+}
+--
+  local_10 = param_1;
+  memset(acStack_210,0,0x200);
+  snprintf(acStack_210,0x200,"ip link add link %s name %s type macvlan",local_10,param_2);
+  util_execSystem("oal_vlan_createMacVlanIntf",acStack_210);
+  oal_intf_waitIntfExists(param_2);
+  FUN_000b9c00(1,param_2);
+  return 0;
+--
+
+// WARNING: Unknown calling convention -- yet parameter storage is locked
+
+int system(char *__command)
+
+{
+  int iVar1;
